@@ -1,0 +1,45 @@
+add_newline=false
+format = """
+[┌─$username](red)
+[└─$directory$rust$package$git_branch> ](red)"""
+[character]
+error_symbol="[|❯](red)"
+success_symbol="[|❯](white)"
+[line_break]
+disabled=true
+[cmd_duration]
+disabled=true
+[directory]
+style="white bold"
+format="\\[[$path]($style)\\]"
+truncation_length = 3
+truncation_symbol = "…/"
+[username]
+style_user="white bold"
+disabled=false
+show_always=true
+format="(bold red)\\[[$user]($style)\\]"
+[git_commit]
+disabled=false
+commit_hash_length = 4
+#tag_symbol = "🔖 "
+[git_branch]
+disabled=false
+#symbol = "🌱 "
+truncation_length = 10
+truncation_symbol = ""
+format = " on [$symbol$branch]($style)"
+style = "bold white"
+
+[git_status]
+disabled=false
+conflicted = "🏳"
+ahead = "🏎💨"
+behind = "😰"
+diverged = "😵"
+untracked = "🤷‍"
+stashed = "📦"
+modified = "📝"
+staged = '[++\($count\)](green)'
+renamed = "👅"
+deleted = "🗑"

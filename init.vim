@@ -1,4 +1,3 @@
-""" Optixal's Neovim Init.vim
 
 """ Vim-Plug
 call plug#begin()
@@ -83,6 +82,7 @@ set wrap breakindent
 set encoding=utf-8
 set relativenumber
 set title
+set syntax=gas
 
 """ Plugin Configurations
 
