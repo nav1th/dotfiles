@@ -41,15 +41,15 @@ check_internet(){
 install_software(){
     case $distro in
         arch | manjaro)
-            pacman -Syy --noconfirm zsh neovim zsh-syntax-highlighting nodejs 2>/dev/null 1>&2
+            pacman -Syy --noconfirm zsh neovim zsh-syntax-highlighting 2>/dev/null 1>&2
             ;;
         fedora)
             dnf check-update
-            dnf install -y zsh neovim zsh-syntax-highlighting nodejs 2>/dev/null 1>&2
+            dnf install -y zsh neovim zsh-syntax-highlighting 2>/dev/null 1>&2
             ;;
         debian | ubuntu | *)
             apt update 2>/dev/null 1>&2
-            apt install -y zsh neovim zsh-syntax-highlighting nodejs 2>/dev/null 1>&2
+            apt install -y zsh neovim zsh-syntax-highlighting 2>/dev/null 1>&2
             ;;
     esac
     sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y 2>/dev/null 1>&2
