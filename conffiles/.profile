@@ -1,5 +1,5 @@
 export EDITOR='nvim'
-export TMPDIR='/home/glitch/tmp'
+export TMPDIR='~/tmp'
 alias vim=nvim
 alias svim='sudo -E nvim'
 alias zshconfig="vim ~/.zshrc"
