@@ -50,11 +50,13 @@ install_software(){
             ;;
     esac
     sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y
+    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+           https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 }
 copy_to_conf(){
     user=`who | awk '{print $1}'`
-    tar -xvf conf.tar.gz conffiles 2>/dev/null
+    tar -xvf conf.tar.gz conffiles 2>/dev/null 1>&2
     cd conffiles 2>/dev/null 
     if [ $? -eq 0 ]; then
         cp .profile .zshrc /home/$user
