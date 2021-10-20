@@ -62,7 +62,7 @@ packages_update(){
 }
 package_install(){
     msg "installing $software..."
-        if $tool $args $software;then #2>/dev/null 1>&2; then
+        if $tool $args $software 2>/dev/null 1>&2; then
             good "$software installed"
         else
             error "$software could not be installed run '$tool $args $software' to find out why" 
@@ -73,7 +73,6 @@ package_install(){
 install_nodejs(){
     msg "installing nodejs"
     if wget https://nodejs.org/dist/v14.18.1/node-v14.18.1-linux-x64.tar.xz -O nodejs 2>/dev/null 1>&2; then
-        mkdir /opt 2>/dev/null #creates /opt if it hasn't already been created
         rm -rf /opt/node* #removes any previous instances of nodejs in opt
         tar -xvf nodejs -C /opt 2>/dev/null 1>&2
         mv /opt/node* /opt/nodejs
@@ -86,14 +85,15 @@ install_nodejs(){
     fi
 }
 install_vim(){
-    if ! nvim -v; then
-        curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+    if ! nvim -v 2>/dev/null 1>&2; then
+        curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage 2>/dev/null
         chmod 755 nvim.appimage
-        if ! ./nvim.appimage -v 2>/dev/null 1>&2; then
-            ./nvim.appimage --appimage-extract 2>/dev/null 1>&2
+        if ! su $user -c "./nvim.appimage" -v 2>/dev/null 1>&2; then
+            ./nvim.appimage --appimage-extract  2>/dev/null 1>&2
             ./squashfs-root/AppRun --version 2>/dev/null 1>&2
+            mv squashfs-root /opt/nvim && ln -s /opt/nvim/AppRun /usr/bin/nvim 2>/dev/null
         else
-            mv squashfs-root /opt/nvim && ln -s /opt/nvim/AppRun /usr/bin/nvim
+            mv nvim.appimage /opt/nvim && ln -s /opt/nvim /usr/bin/nvim 
         fi
     fi
 }
@@ -110,6 +110,7 @@ install_zsh-syn-high(){
     fi
 }
 install_software(){
+    mkdir /opt 2>/dev/null #creates /opt if it hasn't already been created
     case $distro in
         arch | manjaro)
             packages_update "pacman" "-Syy" 
@@ -155,6 +156,7 @@ copy_to_conf(){
         if mkdir -p $home/.config/nvim/ 2>/dev/null 1>&2; then
             good "nvim configuation directory made"
         fi
+        cd conffiles
         if cp .profile .zshrc $home;then
             good "copied .zshrc to $home"
             good "copied .profile to $home"
@@ -174,8 +176,8 @@ finishing_touch()(
     chown -R $user $home/.profile $home/.zshrc $home/.config 2>/dev/null
     cd ..
     rm -rf conffiles zsh-syntax-highlighting 2>/dev/null 
-    usermod --shell /usr/bin/zsh $user 
-    ok "done"
+    usermod --shell /usr/bin/zsh $user 2>/dev/null 1>&2
+    good "done"
     exit 0
 )
 
