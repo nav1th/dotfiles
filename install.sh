@@ -25,7 +25,7 @@ check_root(){
 check_location(){
     basename="$(dirname $0)"
     realpath="$(realpath $basename)"
-    if [$realpath -ne $PWD];then
+    if [$realpath -ne $PWD 2>/dev/null];then
         error "need to be in the script directory to run script"
         exit 1
     fi
@@ -62,7 +62,7 @@ packages_update(){
 }
 package_install(){
     msg "installing $software..."
-        if $tool $args $software 2>/dev/null 1>&2; then
+        if $tool $args $software;then #2>/dev/null 1>&2; then
             good "$software installed"
         else
             error "$software could not be installed run '$tool $args $software' to find out why" 
@@ -110,21 +110,21 @@ install_zsh-syn-high(){
     fi
 }
 install_software(){
-    software=zsh
     case $distro in
         arch | manjaro)
             packages_update "pacman" "-Syy" 
-            package_install "pacman" "-S" "zsh"
+            package_install "pacman" "-S" "$software"
             ;;
         fedora)
             packages_update "dnf" "check-update"
-            package_install dnf install $software
+            package_install "dnf" "install" "$software"
             ;;
         debian | ubuntu | kali | raspian)
             packages_update "apt" "update"
             package_install "apt" "install" "$software"
             ;;
         *)
+            software=zsh
             warn "could not identify distro, running script as if it's debian based"
             if  apt -v 2>/dev/null 1&>2; then
                 packages_update "apt" "update"
@@ -136,7 +136,7 @@ install_software(){
     esac
     install_nodejs
     install_zsh-syn-high
-    install_nvim
+    install_vim
     msg "installing starship prompt..."
     if sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y 2>/dev/null 1>&2;then 
         good "starship installed"
