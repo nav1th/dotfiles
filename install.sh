@@ -151,7 +151,7 @@ copy_to_conf(){
     if tar -xvf conf.tar conffiles 2>/dev/null 1>&2;then
         good "configuration files extracted"
         msg "making configuriation directories"
-        if mkdir -p $home/.config/nvim/ 2>/dev/null 1>&; then
+        if mkdir -p $home/.config/nvim/ 2>/dev/null 1>&2; then
             good "nvim configuation directory made"
         fi
         if cp .profile .zshrc $home;then
