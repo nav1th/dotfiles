@@ -23,12 +23,13 @@ check_root(){
     fi
 }
 check_location(){
-    if cd conffiles 2>/dev/null; then
-        cd ..
-    else
-        error "not in the directory of the git repo, need to be inside of it for script to work"
+    basename="$(dirname $0)"
+    realpath="$(realpath $basename)"
+    if [$realpath -ne $PWD];then
+        error "need to be in the script directory to run script"
         exit 1
     fi
+
 }
 
 check_distro(){
@@ -164,22 +165,24 @@ copy_to_conf(){
         if cp init.vim $home/.config/nvim; then
             good "copied init.vim to $home/.config/nvim"
         fi
-        chown -R $user $home/.profile $home/.zshrc $home/.config
-        cd ..
-        rm -rf conffiles zsh-syntax-highlighting 2>/dev/null 
-        usermod --shell /usr/bin/zsh $user
-        ok "done"
-        exit 0
     else
         error "failed to extract configuration files"
         exit 1
     fi
-
 }
+finishing_touch()(
+    chown -R $user $home/.profile $home/.zshrc $home/.config 2>/dev/null
+    cd ..
+    rm -rf conffiles zsh-syntax-highlighting 2>/dev/null 
+    usermod --shell /usr/bin/zsh $user 
+    ok "done"
+    exit 0
+)
 
-check_root
+check_root 
 check_location
 check_distro
 check_internet
 install_software
 copy_to_conf
+finishing_touch
