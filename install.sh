@@ -41,6 +41,41 @@ check_distro(){
     fi
 
 }
+config_packageman(){
+    case $distro in
+        arch | manjaro)
+            pm="pacman" 
+            update="-Syy" 
+            install="-S"
+            ;;
+        fedora)
+            pm="dnf"
+            update="check-update" 
+            install="install"
+            ;;
+        debian | ubuntu | kali | raspian)
+            pm="apt"
+            update="update" 
+            install="install -y"
+            ;;
+        void)
+            pm="xbps"
+            install="-install"
+            update="-update"
+        *)
+            warn "could not identify distro, running script as if it's debian based"
+            if  apt -v 2>/dev/null 1&>2; then
+                pm="apt"
+                update="update"
+                install="install -y"
+            else
+                warn "apt could not be detected, please edit the code to install $software using your package manager"
+                return 1
+            fi
+            ;;
+    esac
+    return 0
+}
 check_internet(){
     tool=ping
     if ! $tool -c 1 8.8.8.8 >/dev/null 2>&1; then
@@ -49,8 +84,6 @@ check_internet(){
     fi
 }
 packages_update(){
-    tool=$1
-    args=$2
     msg "updating $distro repositories"
     if $tool $args 2>/dev/null 1>&2; then
         good "repositories updated"
@@ -61,24 +94,18 @@ packages_update(){
     return 0
 }
 package_install(){
-    msg "installing $software..."
-        if $tool $args $software 2>/dev/null 1>&2; then
-            good "$software installed"
+    msg "installing $1..."
+        if $pm $install $1 2>/dev/null 1>&2; then
+            good "$1 installed"
         else
-            error "$software could not be installed run '$tool $args $software' to find out why" 
+            error "$1 could not be installed run '$pm $install $1' to find out why" 
             return 1
         fi 
         return 0
 }
 install_nodejs(){
     msg "installing nodejs"
-    if wget https://nodejs.org/dist/v14.18.1/node-v14.18.1-linux-x64.tar.xz -O nodejs 2>/dev/null 1>&2; then
-        rm -rf /opt/node* #removes any previous instances of nodejs in opt
-        tar -xvf nodejs -C /opt 2>/dev/null 1>&2
-        mv /opt/node* /opt/nodejs
-        rm /usr/bin/node 2>/dev/null #remove any bad softlinks
-        ln -s /opt/nodejs/bin/node /usr/bin/node
-        rm nodejs
+    if sh -c "$(curl -fsSL https://starship.rs/install.sh)" && package install nodejs 2>/dev/null 1>&2; then
         good "nodejs installed"
     else
         warn "nodejs failed to install"
@@ -97,7 +124,7 @@ install_vim(){
         fi
     fi
 }
-install_zsh-syn-high(){
+install_zsh(){
     rm  -rf $home/zsh-syntax-highlighting 2>/dev/null
     if ! ls $home/.zsh-syntax-highlighting 2>/dev/null 1>&2; then
         msg "installing zsh-syntax-highlighting"
@@ -111,30 +138,8 @@ install_zsh-syn-high(){
 }
 install_software(){
     mkdir /opt 2>/dev/null #creates /opt if it hasn't already been created
-    case $distro in
-        arch | manjaro)
-            packages_update "pacman" "-Syy" 
-            package_install "pacman" "-S" "$software"
-            ;;
-        fedora)
-            packages_update "dnf" "check-update"
-            package_install "dnf" "install" "$software"
-            ;;
-        debian | ubuntu | kali | raspian)
-            packages_update "apt" "update"
-            package_install "apt" "install" "$software"
-            ;;
-        *)
-            software=zsh
-            warn "could not identify distro, running script as if it's debian based"
-            if  apt -v 2>/dev/null 1&>2; then
-                packages_update "apt" "update"
-                package_install "apt" "install" "$software"
-            else
-                warn "apt could not be detected, please edit the code to install $software using your package manager"
-            fi
-            ;;
-    esac
+    can_use_pm=config_packageman
+    packages_update
     install_nodejs
     install_zsh-syn-high
     install_vim
