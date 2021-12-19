@@ -2,7 +2,6 @@
 
 user=$(who | awk '{print $1}' | head -n1)
 home="/home/$user"
-conf_archive="conffiles.tar.gz" 
 conf_directory="conffiles"
 nvim_dir="$home/.config/nvim"
 zshsynhigh="zsh-syntax-highlighting"
@@ -112,7 +111,7 @@ package_install(){
             error "$1 could not be installed run '$pm $install $1' to find out why" 
             return 1
         fi 
-        return 0
+    return 0
 }
 install_nodejs(){
     msg "installing nodejs"
@@ -192,40 +191,32 @@ install_software(){
 }
 copy_files(){
 	msg "copying $1 to $2"
-        if cp $1 $2 2>/dev/null ;then
-            good "copied $1 to $2"
-    	else
-	    err "failed to copy $1 to $2"
-        fi
+    if cp $1 $2 2>/dev/null ;then
+        good "copied $1 to $2"
+    else
+        err "failed to copy $1 to $2"
+    fi
 }
 configure(){
-    if zsh -v 2>/dev/null 1>&2;then
-	msg "setting zsh to $user's default shell"
-	usermod --shell /usr/bin/zsh $user 2>/dev/null 1>&2
+    if zsh --version 2>/dev/null 1>&2;then
+        msg "setting zsh to $user's default shell"
+        usermod --shell /usr/bin/zsh $user 2>/dev/null 1>&2
     fi
-    msg "extracting configuration files"
-    if tar -xvf $conf_archive $conf_directory 2>/dev/null 1>&2;then
-        good "configuration files extracted"
-        msg "making configuriation directories"
-        if mkdir -p $nvim_dir 2>/dev/null 1>&2; then
-            good "nvim configuation directory made"
-        fi
-        cd conffiles
+    if mkdir -p $nvim_dir 2>/dev/null 1>&2; then
+        good "nvim configuation directory made"
+    fi
+    cd $conf_directory
 	copy_files .zshrc $home
 	copy_files starship.toml $home/.config
 	copy_files .profile $home
     if nvim -v 2/dev/null 1>&2; then
-	    copy_files init.vim $home/.conifg/nvim
+	    copy_files init.vim $home/.config/nvim
     fi
 	return 0;
-    else
-        error "failed to extract configuration files"
-        exit 1
-    fi
 }
 cleanup(){
     cd ..
-    rm -rf $conf_directory $zshsynhigh 2>/dev/null 
+    rm -rf $zshsynhigh 2>/dev/null 
     good "done"
     exit 0
 }
@@ -237,7 +228,7 @@ check_distro
 if check_location; then
     config_packageman
     if check_internet;then
-	install_software
+        install_software
     fi
     copy_to_conf
     cleanup
