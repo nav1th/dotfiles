@@ -4,9 +4,11 @@ call plug#begin('~/.vim/plugged')
    Plug 'preservim/nerdtree'
    Plug 'preservim/tagbar'
    Plug 'preservim/vim-pencil'
-   Plug 'ycm-core/YouCompleteMe'
    Plug 'sheerun/vim-polyglot'
    Plug 'flazz/vim-colorschemes'
+   Plug 'luochen1990/rainbow'
+   Plug 'jiangmiao/auto-pairs'
+   Plug 'https://github.com/ycm-core/YouCompleteMe'
 call plug#end()
 syntax enable
 set ruler
@@ -87,9 +89,7 @@ set wrap "Wrap lines
 
 
 " Enable 256 colors palette in Gnome Terminal
-if $COLORTERM == 'gnome-terminal'
-    set t_Co=256
-endif
+set t_Co=256
 
 " Tab stuff
 map <C-j> <C-W>j
@@ -101,6 +101,9 @@ map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 
+ 
+"rainbow
+let g:rainbow_active = 1
 " Search options
 map <space> /
 map <C-space> ?
@@ -119,5 +122,20 @@ nmap <F8> :TagbarToggle<CR>
 "Colors
 colorscheme badwolf
 set background=dark
-set t_Co=256
+let java_highlight_functions = 1
+let java_highlight_all = 1
+set filetype=java
 
+" Some more highlights, in addition to those suggested by cmcginty
+highlight link javaScopeDecl Statement
+highlight link javaType Type
+highlight link javaDocTags PreProc
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+set omnifunc=csscomplete#CompleteCSS
