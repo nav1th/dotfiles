@@ -104,7 +104,6 @@ packages_update(){
 }
 package_install(){
     msg "installing $1..."
-    sleep 100
         if $pm $install $1 2>/dev/null 1>&2; then
             good "$1 installed"
         else
@@ -114,7 +113,6 @@ package_install(){
     return 0
 }
 install_nodejs(){
-    msg "installing nodejs"
 	case $distro in 
 		fedora | redhat | centos)
 		    sh -c "$(curl -fsSL https://rpm.nodesource.com/setup_lts.x)" 2>/dev/null 1>&2
@@ -154,26 +152,28 @@ install_nvim(){
     fi
 }
 install_zsh(){
-    package_install zsh 
-    if ! ls $home/.$zshsynhigh 2>/dev/null 1>&2; then
-        msg "downloading $zshsynhigh files. "
-        if git clone https://github.com/zsh-users/$zshsynhigh.git 2>/dev/null 1>&2; then
-	    good "$zshsynhigh files downloaded"
-	    msg "installing $zshsynhigh"
-	    if mv $zshsynhigh $home/.$zshsynhigh 2>/dev/null && chown -R $user $home/.$zshsynhigh 2>/dev/null;then 
-	    	good "$zshsynhigh installed"
-		return 0
-	    else
-		err "$zshsynhigh failed to install"
-		return 1
-	    fi
-	else
-	    err "failed to download $zshsynhigh files. are you still connected to the net?"
-	    return 1
-	fi
-    else
-        msg "$zshsynhigh already installed"
+    msg "installing zsh"
+    if package_install zsh; then
+        good "zsh installed"
 	return 0
+    fi
+}
+install_zsh_syn_high(){
+    msg "downloading $zshsynhigh files. "
+    if git clone https://github.com/zsh-users/$zshsynhigh.git $home/.$zshsynhigh 2>/dev/null 1>&2; then
+        good "$zshsynhigh files downloaded"
+        msg "installing $zshsynhigh"
+        #mv $zshsynhigh $home/.$zshsynhigh 2>/dev/null &&
+        if chown -R $user $home/.$zshsynhigh 2>/dev/null;then 
+        good "$zshsynhigh installed"
+        return 0
+        else
+        err "$zshsynhigh failed to install"
+        return 1
+        fi
+    else
+        err "failed to download $zshsynhigh files. are you still connected to the net?"
+        return 1
     fi
 }
 install_software(){
@@ -181,7 +181,12 @@ install_software(){
     packages_update
     #install_nodejs
     #install_nvim
-    #install_zsh
+    if ! zsh --version 2>/dev/null 1>&2; then
+        install_zsh
+        if ! ls $home/.$zshsynhigh 2>/dev/null 1>&2; then
+            install_zsh_syn_high
+        fi
+    fi
     msg "installing starship prompt..."
     if sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y 2>/dev/null 1>&2;then 
         good "starship installed"
@@ -194,7 +199,7 @@ copy_files(){
     if cp $1 $2 2>/dev/null ;then
         good "copied $1 to $2"
     else
-        err "failed to copy $1 to $2"
+        error "failed to copy $1 to $2"
     fi
 }
 configure(){
@@ -210,17 +215,11 @@ configure(){
 	copy_files starship.toml $home/.config
 	copy_files .profile $home
 	copy_files .vimrc $home
-	copy_files .tmux.conf
-    if nvim -v 2/dev/null 1>&2; then
-	    copy_files init.vim $home/.config/nvim
-    fi
-	return 0;
-}
-cleanup(){
+	copy_files .tmux.conf $home
+    copy_files init.vim $home/.config/nvim
+    chown -R $user:$user $home/.zshrc $home/.vimrc $home/.profile $home/.tmux.conf $home/.config/starship.toml $home/.config/nvim
     cd ..
-    rm -rf $zshsynhigh 2>/dev/null 
-    good "done"
-    exit 0
+	return 0;
 }
 main(){
 if ! check_root;then
@@ -233,7 +232,6 @@ if check_location; then
         install_software
     fi
     configure
-    cleanup
 #    su $user -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 else 
     exit 1
