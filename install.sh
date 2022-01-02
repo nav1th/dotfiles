@@ -68,7 +68,7 @@ config_packageman(){
             update="check-update" 
             install="install -y"
             ;;
-        debian | ubuntu | kali | raspian)
+        debian | ubuntu | kali | raspian | zorin )
             pm="apt"
             update="update" 
             install="install -y"
@@ -94,10 +94,10 @@ config_packageman(){
 }
 packages_update(){
     msg "updating $distro repositories"
-    if $tool $args 2>/dev/null 1>&2; then
+    if $pm $update 2>/dev/null 1>&2; then
         good "repositories updated"
     else
-        error "repositories failed to be updated run $pm $update' to find out why"
+        error "repositories failed to be updated run '$pm $update' to find out why"
         return 1
     fi
     return 0
@@ -124,8 +124,7 @@ install_nodejs(){
 		    ;;
 		    *)
 	    esac
-
-    if package install nodejs 2>/dev/null 1>&2; then
+    if package_install nodejs 2>/dev/null 1>&2; then
         good "nodejs installed"
     else
         warn "nodejs failed to install"
@@ -180,8 +179,9 @@ install_zsh(){
 install_software(){
     mkdir /opt 2>/dev/null #creates /opt if it hasn't already been created
     packages_update
-    install_nodejs
+    #install_nodejs
     #install_nvim
+    #install_zsh
     msg "installing starship prompt..."
     if sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y 2>/dev/null 1>&2;then 
         good "starship installed"
@@ -190,7 +190,7 @@ install_software(){
     fi
 }
 copy_files(){
-	msg "copying $1 to $2"
+    msg "copying $1 to $2"
     if cp $1 $2 2>/dev/null ;then
         good "copied $1 to $2"
     else
@@ -209,6 +209,8 @@ configure(){
 	copy_files .zshrc $home
 	copy_files starship.toml $home/.config
 	copy_files .profile $home
+	copy_files .vimrc $home
+	copy_files .tmux.conf
     if nvim -v 2/dev/null 1>&2; then
 	    copy_files init.vim $home/.config/nvim
     fi
@@ -230,7 +232,7 @@ if check_location; then
     if check_internet;then
         install_software
     fi
-    copy_to_conf
+    configure
     cleanup
 #    su $user -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 else 
