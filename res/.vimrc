@@ -8,10 +8,16 @@ call plug#begin('~/.vim/plugged')
    Plug 'flazz/vim-colorschemes'
    Plug 'luochen1990/rainbow'
    Plug 'jiangmiao/auto-pairs'
-   Plug 'https://github.com/ycm-core/YouCompleteMe'
+   Plug 'ycm-core/YouCompleteMe'
+   Plug 'itchyny/lightline.vim'
+   Plug 'tpope/vim-commentary'
+   Plug 'junegunn/fzf'
+   Plug 'mhinz/vim-startify'
+   Plug 'amiorin/vim-project'
 call plug#end()
 syntax enable
 set ruler
+set number
 let mapleader = ","
 
 " Set 7 lines to the cursor - when moving vertically using j/k
@@ -121,7 +127,7 @@ nmap <F8> :TagbarToggle<CR>
 
 "Colors
 colorscheme badwolf
-set background=dark
+"set background=dark
 let java_highlight_functions = 1
 let java_highlight_all = 1
 set filetype=java
@@ -130,4 +136,5 @@ set filetype=java
 highlight link javaScopeDecl Statement
 highlight link javaType Type
 highlight link javaDocTags PreProc
-
+set statusline+=%*
+set omnifunc=csscomplete#CompleteCSS
