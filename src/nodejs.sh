@@ -4,14 +4,14 @@ install_nodejs(){
 		fedora | redhat | centos)
 		    sh -c "$(curl -fsSL https://rpm.nodesource.com/setup_lts.x)" 2>/dev/null 1>&2
 		    ;;
-		debian | ubuntu | kali | raspian)
+		debian | ubuntu | kali | raspian | zorin)
 		    sh -c "$(curl -fsSL https://deb.nodesource.com/setup_lts.x)" 2>/dev/null 1>&2
 		    ;;
 		    *)
 	    esac
-    if package_install nodejs 2>/dev/null 1>&2; then
-        good "nodejs installed"
+    if package_install nodejs; then
+        return 0
     else
-        warn "nodejs failed to install"
+        return 1
     fi
 }

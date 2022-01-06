@@ -4,9 +4,9 @@ user=$(who | awk '{print $1}' | head -n1)
 home="/home/$user"
 conf_directory="../res"
 nvim_dir="$home/.config/nvim"
-source install/zsh.sh
-source install/nodejs.sh
-source install/nvim.sh
+source src/zsh.sh
+source src/nodejs.sh
+source src/nvim.sh
 
 
 good(){
