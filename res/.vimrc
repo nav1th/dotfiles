@@ -14,7 +14,6 @@ call plug#begin('~/.vim/plugged')
    Plug 'luochen1990/rainbow'
    Plug 'jiangmiao/auto-pairs'
    Plug 'ycm-core/YouCompleteMe'
-   Plug 'itchyny/lightline.vim'
    Plug 'junegunn/fzf'
    Plug 'amiorin/vim-project'
    Plug 'moll/vim-bbye'
@@ -80,6 +79,9 @@ filetype indent on
 set nobackup
 set nowb
 set noswapfile
+"set noshowmode
+"set noshowcmd
+set laststatus=2
 
 
 set expandtab
@@ -143,5 +145,5 @@ set filetype=java
 highlight link javaScopeDecl Statement
 highlight link javaType Type
 highlight link javaDocTags PreProc
-set statusline+=%*
 set omnifunc=csscomplete#CompleteCSS
+set rtp+=/usr/share/powerline/bindings/vim
