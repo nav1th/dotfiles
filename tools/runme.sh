@@ -116,7 +116,7 @@ install_software(){
     done
     #install_nodejs
     #install_nvim
-    if ! zsh --version 2>/dev/null 1>&2; then
+    if zsh --version 2>/dev/null 1>&2; then
         install_zsh-plug
     fi
     msg "installing starship prompt..."
