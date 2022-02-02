@@ -138,6 +138,7 @@ configure(){
     if zsh --version 2>/dev/null 1>&2;then
         msg "setting zsh to $USER's default shell"
         usermod --shell /usr/bin/zsh $USER 2>/dev/null 1>&2
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
     fi
     if mkdir -p "$HOME/.config/nvim" 2>/dev/null 1>&2; then
         good "nvim configuation directory made"
