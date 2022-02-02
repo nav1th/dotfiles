@@ -12,7 +12,7 @@ if source $ZSH/oh-my-zsh.sh 2>/dev/null; then
 fi
 
 #zsh-plugins
-export ZSH_PLUGIN="$HOME/.zsh"
+ZSH_PLUGIN="$HOME/.zsh"
 ZSH_SYN_HIGH=$ZSH_PLUGIN/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 ZSH_AUTOSUGG=$ZSH_PLUGIN/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $ZSH_SYN_HIGH

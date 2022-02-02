@@ -1,10 +1,11 @@
 #!/bin/bash
 
-user=$(who | awk '{print $1}' | head -n1)
-home="/home/$user"
-conf_directory="../res"
-nvim_dir="$home/.config/nvim"
-source src/zsh.sh
+USER=$(who | awk '{print $1}' | head -n1)
+HOME="/home/$USER"
+CONFDIR="res"
+declare -a PACKAGES=("zsh" "tmux")
+DISTRO=`cat /etc/os-release | grep -v VERSION | grep ID | awk -F '=' '{print $2}'`
+source src/zsh-plug.sh
 source src/nodejs.sh
 source src/nvim.sh
 
@@ -50,17 +51,8 @@ check_internet(){
 	good "internet connection working"
     fi
 }
-
-check_distro(){
-    if cat /etc/os-release 2>/dev/null 1>&2; then
-        distro=`cat /etc/os-release | awk -F '=' '{print $2}' | head -n3 | tail -n1`
-    else
-        distro=`cat /etc/lsb-release | awk -F '=' '{print $2}' | head -n1`
-    distro=`echo ${distro,,}`
-    fi
-}
 config_packageman(){
-    case $distro in
+    case $DISTRO in
         arch | manjaro)
             pm="pacman" 
             update="-Syy" 
@@ -71,7 +63,7 @@ config_packageman(){
             update="check-update" 
             install="install -y"
             ;;
-        debian | ubuntu | kali | raspian | zorin )
+        debian | ubuntu | kali | raspian | zorin | linuxmint | parrot | popos)
             pm="apt"
             update="update" 
             install="install -y"
@@ -79,10 +71,10 @@ config_packageman(){
         void)
             pm="xbps-install"
             install=""
-            update="-install -S "
+            update="-S"
 	    ;;
         *)
-            warn "could not identify distro, running script as if it's debian based"
+            warn "could not identify DISTRO, running script as if it's debian based"
             if  apt -v 2>/dev/null 1&>2; then
                 pm="apt"
                 update="update"
@@ -96,7 +88,7 @@ config_packageman(){
     return 0
 }
 packages_update(){
-    msg "updating $distro repositories"
+    msg "updating $DISTRO repositories"
     if $pm $update 2>/dev/null 1>&2; then
         good "repositories updated"
     else
@@ -116,19 +108,19 @@ package_install(){
     return 0
 }
 install_software(){
-    mkdir /opt 2>/dev/null #creates /opt if it hasn't already been created
+    mkdir /opt 2>/dev/null 
     packages_update
+    for i in "${PACKAGES[@]}"
+    do
+        package_install $i
+    done
     #install_nodejs
     #install_nvim
     if ! zsh --version 2>/dev/null 1>&2; then
-        install_zsh
-        mkdir $zshdir
-        if ! ls $zshdir/$zshsynhigh 2>/dev/null 1>&2; then
-            install_zsh_syn_high
-        fi
+        install_zsh-plug
     fi
     msg "installing starship prompt..."
-    if sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- -y 2>/dev/null 1>&2;then 
+    if sh -c "$(curl -fssl https://starship.rs/install.sh)" -- -y 2>/dev/null 1>&2;then 
         good "starship installed"
     else
         warn "starship failed to install"
@@ -144,20 +136,20 @@ copy_files(){
 }
 configure(){
     if zsh --version 2>/dev/null 1>&2;then
-        msg "setting zsh to $user's default shell"
-        usermod --shell /usr/bin/zsh $user 2>/dev/null 1>&2
+        msg "setting zsh to $USER's default shell"
+        usermod --shell /usr/bin/zsh $USER 2>/dev/null 1>&2
     fi
-    if mkdir -p $nvim_dir 2>/dev/null 1>&2; then
+    if mkdir -p "$HOME/.config/nvim" 2>/dev/null 1>&2; then
         good "nvim configuation directory made"
     fi
-    cd $conf_directory
-	copy_files .zshrc $home
-	copy_files starship.toml $home/.config
-	copy_files .profile $home
-	copy_files .vimrc $home
-	copy_files .tmux.conf $home
-    copy_files init.vim $home/.config/nvim
-    chown -R $user:$user $home/.zshrc $home/.vimrc $home/.profile $home/.tmux.conf $home/.config/starship.toml $home/.config/nvim
+    cd $CONFDIR
+    copy_files .zshrc $HOME
+    copy_files starship.toml $HOME/.config
+    copy_files .profile $HOME
+    copy_files .vimrc $HOME
+    copy_files .tmux.conf $HOME
+    copy_files init.vim $HOME/.config/nvim
+    chown -R $USER:$USER $HOME/.zshrc $HOME/.vimrc $HOME/.profile $HOME/.tmux.conf $HOME/.config/starship.toml $HOME/.config/nvim
     cd ..
 	return 0;
 }
@@ -165,14 +157,14 @@ main(){
 if ! check_root;then
    exit 1 
 fi
-check_distro
 if check_location; then
     config_packageman
     if check_internet;then
         install_software
     fi
     configure
-#    su $user -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    exit 0
+#    su $USER -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 else 
     exit 1
 fi
