@@ -13,7 +13,7 @@ call plug#begin('~/.vim/plugged')
    Plug 'flazz/vim-colorschemes'
    Plug 'luochen1990/rainbow'
    Plug 'jiangmiao/auto-pairs'
-   Plug 'ycm-core/YouCompleteMe'
+  " Plug 'ycm-core/YouCompleteMe'
    Plug 'junegunn/fzf'
    Plug 'amiorin/vim-project'
    Plug 'moll/vim-bbye'
@@ -146,4 +146,3 @@ highlight link javaScopeDecl Statement
 highlight link javaType Type
 highlight link javaDocTags PreProc
 set omnifunc=csscomplete#CompleteCSS
-set rtp+=/usr/share/powerline/bindings/vim

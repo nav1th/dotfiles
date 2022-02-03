@@ -1,10 +1,9 @@
-export PATH=$PATH:/home/glitch/.local/bin
+export PATH=$PATH:$HOME/.local/bin:$HOME/.cargo/bin
 export EDITOR='vim'
 export VISUAL='vim'
-export TMPDIR='/home/glitch/tmp'
+export TMPDIR='$HOME/.tmp'
 export XDG_CONFIG_DIRS='/etc/xdg'
 alias svim='sudo -E vim'
 alias snvim='sudo -E nvim'
 alias zshconfig="vim ~/.zshrc"
 alias vimconfig="vim ~/.vimrc"
-alias pacman="yay"

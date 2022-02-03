@@ -12,14 +12,11 @@ if source $ZSH/oh-my-zsh.sh 2>/dev/null; then
 fi
 
 #zsh-plugins
-ZSH_PLUGIN="$HOME/.zsh"
-ZSH_SYN_HIGH=$ZSH_PLUGIN/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-ZSH_AUTOSUGG=$ZSH_PLUGIN/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $ZSH_SYN_HIGH
-source $ZSH_AUTOSUGG
-
+if ls $HOME/.zsh 2>/dev/null 1>&2; then
+    source $HOME/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
 source $HOME/.profile
-
 export TERM="xterm-256color"
 
 
@@ -27,10 +24,10 @@ export TERM="xterm-256color"
  #DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
- DISABLE_AUTO_TITLE="true"
+DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
- ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
@@ -62,4 +59,4 @@ HIST_STAMPS="dd/mm/yyyy"
 setopt autocd extendedglob nomatch
 unsetopt beep
 eval "$(starship init zsh)"
-if [ "$TMUX" = "" ]; then tmux; fi
+#if [ "$TMUX" = "" ]; then tmux; fi

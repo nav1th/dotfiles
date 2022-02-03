@@ -3,7 +3,7 @@
 USER=$(who | awk '{print $1}' | head -n1)
 HOME="/home/$USER"
 CONFDIR="res"
-declare -a PACKAGES=("zsh" "tmux")
+declare -a PACKAGES=("zsh" "tmux" "vim")
 DISTRO=`cat /etc/os-release | grep -v VERSION | grep ID | awk -F '=' '{print $2}'`
 source src/zsh-plug.sh
 source src/nodejs.sh
@@ -138,7 +138,7 @@ configure(){
     if zsh --version 2>/dev/null 1>&2;then
         msg "setting zsh to $USER's default shell"
         usermod --shell /usr/bin/zsh $USER 2>/dev/null 1>&2
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
+        su $USER -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended --keep-zshrc
     fi
     if mkdir -p "$HOME/.config/nvim" 2>/dev/null 1>&2; then
         good "nvim configuation directory made"

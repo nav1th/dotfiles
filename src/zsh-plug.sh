@@ -3,7 +3,7 @@ ZSHSYNHIGH="zsh-syntax-highlighting"
 ZSHAUTOSUGG="zsh-autosuggestions"
 ZSHDIR="$HOME/.zsh"
 install_zsh-plug(){
-    mkdir $ZSHDIR  
+    su $USER -c "mkdir $ZSHDIR"  
     msg "downloading $ZSHSYNHIGH files... "
     if git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSHDIR/$ZSHSYNHIGH 2>/dev/null 1>&2; then
         good "$ZSHSYNHIGH files downloaded"
