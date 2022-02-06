@@ -59,4 +59,5 @@ HIST_STAMPS="dd/mm/yyyy"
 setopt autocd extendedglob nomatch
 unsetopt beep
 eval "$(starship init zsh)"
-#if [ "$TMUX" = "" ]; then tmux; fi
+if [ "$TMUX" = "" ]; then tmux; fi
+#powerline-daemon -q

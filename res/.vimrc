@@ -1,25 +1,31 @@
 " - Avoid using standard Vim directory names like 'plugin'
 set nocompatible
 call plug#begin('~/.vim/plugged')
-   Plug 'preservim/nerdtree'
-   Plug 'preservim/tagbar'
-   Plug 'preservim/vim-pencil'
-   Plug 'tpope/vim-commentary'
-   Plug 'tpope/tpope-vim-abolish'
-   Plug 'tpope/vim-fugitive'
-   Plug 'mhinz/vim-startify'
-   Plug 'mhinz/vim-signify'
-   Plug 'sheerun/vim-polyglot'
-   Plug 'flazz/vim-colorschemes'
-   Plug 'luochen1990/rainbow'
-   Plug 'jiangmiao/auto-pairs'
-  " Plug 'ycm-core/YouCompleteMe'
-   Plug 'junegunn/fzf'
-   Plug 'amiorin/vim-project'
-   Plug 'moll/vim-bbye'
-   Plug 'neomake/neomake'
-   Plug 'SirVer/ultisnips'
-   Plug 'honza/vim-snippets'
+    Plug 'preservim/nerdtree'
+    Plug 'preservim/tagbar'
+    Plug 'preservim/vim-pencil'
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    Plug 'edkolev/tmuxline.vim'
+    Plug 'tpope/vim-commentary'
+    Plug 'tpope/tpope-vim-abolish'
+    Plug 'tpope/vim-fugitive'
+    Plug 'mhinz/vim-startify'
+    Plug 'mhinz/vim-signify'
+    Plug 'sheerun/vim-polyglot'
+    Plug 'flazz/vim-colorschemes'
+    Plug 'luochen1990/rainbow'
+    Plug 'rafi/awesome-vim-colorschemes'
+    Plug 'jiangmiao/auto-pairs'
+    " Plug 'ycm-core/YouCompleteMe'
+    Plug 'junegunn/fzf'
+    Plug 'amiorin/vim-project'
+    Plug 'moll/vim-bbye'
+    Plug 'neomake/neomake'
+    Plug 'SirVer/ultisnips'
+    Plug 'honza/vim-snippets'
+    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+    Plug 'ryanoasis/vim-devicons'
 call plug#end()
 syntax enable
 set ruler
@@ -46,6 +52,7 @@ set whichwrap+=<,>,h,l
 " Ignore case when searching
 set ignorecase
 
+set nowrap
 " When searching try to be smart about cases
 set smartcase
 
@@ -116,7 +123,10 @@ map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 
- 
+
+"encoding
+set encoding=UTF-8
+
 "rainbow
 let g:rainbow_active = 1
 " Search options
@@ -130,12 +140,18 @@ map <leader>ss :setlocal spell!<cr>
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
+autocmd VimEnter * NERDTree | wincmd p
 
 " Tagbar
 nmap <F8> :TagbarToggle<CR>
 
+
+"lightline
+let g:airline#extensions#tabline#enabled = 1
+
 "Colors
-colorscheme badwolf
+colorscheme purify
+let g:airline_theme='purify'
 "set background=dark
 let java_highlight_functions = 1
 let java_highlight_all = 1
@@ -146,3 +162,5 @@ highlight link javaScopeDecl Statement
 highlight link javaType Type
 highlight link javaDocTags PreProc
 set omnifunc=csscomplete#CompleteCSS
+set laststatus=2 
+set t_Co=256
