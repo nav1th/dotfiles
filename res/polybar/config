@@ -1,6 +1,270 @@
-[bar/mybar]
-modules-right = date
+[colour]
+dark = #1e1e1e
+dark-alt = #444
+light = #dfdfdf
+light-alt = #999
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+light-red = #D95B5B
+light-green = #249824
+light-purple = #A44BA0
+
+yellow = #00bbff
+blue = #00bbff
+orange = #ff7b00
+red = #ff0000
+green = #11FF11
+sealine = #00CF91
+purple = #7700ff
+pink = #FF77BF
+cyan = #00e5dd
+
+fav-purple = #6633FF
+dark-red = #311
+dark-green = #131
+dark-purple = #201134
+gray = #999
+dark-gray = #333
+
+[font]
+;hack = Hack Nerd Font:size=10;0
+;blex = BlexMono Nerd Font:size=8
+;fira = FiraCode Nerd Font Mono:size=8
+opensansreg = DroidSans:Regular:size=8
+opensanssemibold = DroidSans:SemiBold:size=8
+opensansbold = DroidSans:Bold:size=8
+opensansboldhigh = DroidSans:Bold:size=11
+opensansital = DroidSans:Italic:size=9
+xos = xos4\ Terminus:size=14;0
+nerd = TerminessTTF Nerd Font:size=12;0
+
+
+[bar/bar1]
+;monitor = ${env:MONITOR:HDMI-1}
+width = 100%
+height = 27
+;offset-x = 1%
+;offset-y = 1%
+radius = 3.0
+fixed-center = false
+
+bottom = false
+
+background = ${colour.dark}
+foreground = ${colour.light}
+
+line-size = 2
+line-color = #000
+
+border-size = 2
+border-color = #000
+
+padding-left = 0
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 2
+
+;font-0 = ${font.hack}
+;font-1 = ${font.mono}
+;font-2 = ${font.mono}
+font-0 = ${font.opensansreg}
+font-1 = ${font.opensanssemibold}
+font-2 = ${font.opensansbold}
+font-3 = ${font.opensansital}
+font-4 = ${font.xos}
+font-5 = ${font.nerd}
+font-6 = ${font.opensansboldhigh}
+
+modules-left = workspaces
+modules-center = 
+modules-right = alsa memory cpu eth wlan temperature date
+
+tray-position = right
+tray-padding = 2
+;tray-background = #0063ff
+
+;wm-restack = i3
+
+;override-redirect = true
+
+
+;scroll-up = i3wm-wsnext
+;scroll-down = i3wm-wsprev
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...%
+
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "cpu "
+format-prefix-foreground = ${colour.light-alt}
+format-underline = ${colour.purple}
+label = %percentage:2%%
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = "mem "
+format-prefix-foreground = ${colour.light-alt}
+format-underline = ${colour.orange}
+;label = %percentage_used%%
+label = %mb_used%
+
+[module/wlan]
+type = internal/network
+interface = wlp0s20f3
+format-connected =  <ramp-signal>
+format-connected-padding = 1
+format-connected-foreground = ${colour.green}
+format-connected-underline = ${colour.green}
+
+format-disconnected = " "
+format-disconnected-font = 7
+format-disconnected-padding = 2
+format-disconnected-foreground = ${colour.yellow}
+format-disconnected-underline = ${colour.yellow}
+
+ramp-signal-0 = " "
+ramp-signal-1 = "▂"
+ramp-signal-2 = "▄"
+ramp-signal-3 = "▅"
+ramp-signal-4 = "▇"
+ramp-signal-font = 7
+ramp-signal-foreground = ${colour.green}
+
+
+[module/eth]
+type = internal/network
+interface = enp60s0
+interval = 3.0
+
+format-connected-underline = ${colour.green}
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${colour.light-alt}
+label-connected = %local_ip%
+
+format-disconnected =
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colour.light-alt}
 
 [module/date]
 type = internal/date
-date = %Y-%m-%d%
+interval = 5
+
+date = %a
+date-alt = " %Y-%m-%d"
+
+time = %H:%M
+time-alt = %H:%M:%S
+
+format-prefix = 
+format-prefix-foreground = ${colour.light-alt}
+format-underline = ${colour.blue}
+
+label = %date% %time%
+
+[module/alsa]
+type = internal/alsa
+
+format-volume = <ramp-volume> <label-volume>
+format-volume-padding = 2
+format-volume-underline = ${colour.pink}
+
+label-volume = %percentage%
+label-volume-font = 3
+
+label-muted =  (%percentage%)
+label-muted-font = 3
+label-muted-padding = 2
+label-muted-foreground = ${colour.gray}
+label-muted-underline = ${colour.gray}
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-font = 7
+ramp-volume-foreground = ${colour.pink}
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 60
+
+format = <ramp> <label>
+format-underline = ${colour.green}
+format-warn = <ramp> <label-warn>
+format-warn-underline = ${self.format-underline}
+
+label = %temperature-c%
+label-warn = %temperature-c%
+label-warn-foreground = ${colour.red}
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-foreground = ${colour.light-alt}
+;Workspaces
+
+[module/workspaces]
+type = internal/i3
+
+pin-workspaces = true
+strip-wsnumbers = true
+index-sort = true
+
+format = <label-state> <label-mode>
+
+label-dimmed-underline = ${colour.dark}
+
+;On editing mode (resize for ex)
+label-mode = %mode%
+label-mode-background = ${colour.dark-purple}
+label-mode-underline = ${colour.fav-purple}
+label-mode-padding = 2
+label-mode-font = 3
+
+label-focused = %index%
+label-focused-background = ${colour.dark-red}
+label-focused-underline = ${colour.red}
+label-focused-padding = 3
+label-focused-font = 3
+
+label-unfocused = %index%
+label-unfocused-foreground = ${colour.gray}
+label-unfocused-padding = 3
+label-unfocused-font = 3
+
+label-visible = %index%
+label-visible-background = ${colour.dark-purple}
+label-visible-underline = ${colour.light-purple}
+label-visible-padding = 3
+label-visible-font = 3
+
+label-urgent = %index%
+label-urgent-background = ${colour.dark-red}
+label-urgent-underline = ${colour.light-red}
+label-urgent-padding = 3
+label-urgent-font = 3
+
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+;pseudo-transparency = false
+
+[global/wm]
+margin-top = 0
+margin-bottom = 2
