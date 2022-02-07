@@ -103,7 +103,6 @@ label = %title:0:30:...%
 
 [module/cpu]
 type = internal/cpu
-interval = 2
 format-prefix = "cpu "
 format-prefix-foreground = ${colour.light-alt}
 format-underline = ${colour.purple}
@@ -111,7 +110,6 @@ label = %percentage:2%%
 
 [module/memory]
 type = internal/memory
-interval = 2
 format-prefix = "mem "
 format-prefix-foreground = ${colour.light-alt}
 format-underline = ${colour.orange}
@@ -144,7 +142,6 @@ ramp-signal-foreground = ${colour.green}
 [module/eth]
 type = internal/network
 interface = enp60s0
-interval = 3.0
 
 format-connected-underline = ${colour.green}
 format-connected-prefix = " "
@@ -159,7 +156,6 @@ format-disconnected =
 
 [module/date]
 type = internal/date
-interval = 5
 
 date = %a
 date-alt = " %Y-%m-%d"
@@ -180,8 +176,8 @@ format-volume = <ramp-volume> <label-volume>
 format-volume-padding = 2
 format-volume-underline = ${colour.pink}
 
-label-volume = %percentage%
-label-volume-font = 3
+;label-volume = %percentage%
+;label-volume-font = 3
 
 label-muted =  (%percentage%)
 label-muted-font = 3
@@ -200,7 +196,7 @@ type = internal/temperature
 thermal-zone = 0
 warn-temperature = 60
 
-format = <ramp> <label>
+format = <label>
 format-underline = ${colour.green}
 format-warn = <ramp> <label-warn>
 format-warn-underline = ${self.format-underline}
