@@ -5,24 +5,27 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
   silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+syntax enable
+filetype plugin indent on
 call plug#begin('~/.vim/plugged')
     Plug 'preservim/nerdtree'
     Plug 'preservim/tagbar'
     Plug 'preservim/vim-pencil'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
-    Plug 'edkolev/tmuxline.vim'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/tpope-vim-abolish'
     Plug 'tpope/vim-fugitive'
     Plug 'mhinz/vim-startify'
     Plug 'mhinz/vim-signify'
+    Plug 'edkolev/tmuxline.vim'
     Plug 'sheerun/vim-polyglot'
     Plug 'flazz/vim-colorschemes'
     Plug 'luochen1990/rainbow'
     Plug 'rafi/awesome-vim-colorschemes'
+    Plug 'ycm-core/YouCompleteMe'
     Plug 'jiangmiao/auto-pairs'
-    " Plug 'ycm-core/YouCompleteMe'
+    Plug 'rust-lang/rust.vim'
     Plug 'junegunn/fzf'
     Plug 'amiorin/vim-project'
     Plug 'moll/vim-bbye'
@@ -113,10 +116,11 @@ set tabstop=4
 set lbr
 set tw=500
 
-" Indentation
+" Indentation & wrap
 set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
+set nowrap
 
 
 " Enable 256 colors palette in Gnome Terminal
@@ -165,7 +169,12 @@ let g:airline#extensions#tabline#enabled = 1
 "Colors
 colorscheme purify
 let g:airline_theme='purify'
-"set background=dark
+"ALE
+set completeopt=menu,menuone,preview,noselect,noinsert
+let g:ale_completion_enabled = 1
+let g:ale_linters = {'rust': ['analyzer']}
+
+
 let java_highlight_functions = 1
 let java_highlight_all = 1
 set filetype=java
