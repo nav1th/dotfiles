@@ -4,12 +4,11 @@
 # Path to your oh-my-zsh installation.
 #oh-my-zsh
 export ZSH="$HOME/.oh-my-zsh"
-if source $ZSH/oh-my-zsh.sh 2>/dev/null; then
-    plugins=(git
-        colored-man-pages
-        python
-    )
-fi
+source $ZSH/oh-my-zsh.sh 
+plugins=(git
+    colored-man-pages
+    python
+)
 
 #zsh-plugins
 if ls $HOME/.zsh 2>/dev/null 1>&2; then
