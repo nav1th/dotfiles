@@ -2,9 +2,10 @@
 
 USER=$(who | awk '{print $1}' | head -n1)
 HOME="/home/$USER"
-CONFDIR="res"
-declare -a PACKAGES=("zsh" "tmux" "vim")
+DOTFILES="res"
 DISTRO=`cat /etc/os-release | grep -v VERSION | grep ID | awk -F '=' '{print $2}'`
+declare -a PM_PACKAGES=("zsh" "tmux" "vim")
+declare -a CARGO_PACKAGES=("lsd")
 source src/zsh-plug.sh
 source src/nodejs.sh
 source src/nvim.sh
@@ -25,13 +26,27 @@ error(){
 }
 
 check_root(){
-    id=`id -u`
-    if [ $id -ne 0 ]; then
-        error "you're not root"
+    if [ `id -u` -ne 0 ]; then
+        error "you are not root"
         return 1
     fi
     return 0
 }
+ 
+usage() { 
+    cat 1>&2 <<EOF
+USAGE:
+    ./runme.sh [FLAGS] 
+
+FLAGS:
+    -c, --configure         Configure dotfiles in correct places
+    -i, --install           Install specified software
+    -h, --help              Prints help information
+
+EOF
+}
+ 
+
 check_location(){
     basename="$(dirname $0)"
     realpath="$(realpath $basename)"
@@ -110,7 +125,7 @@ package_install(){
 install_software(){
     mkdir /opt 2>/dev/null 
     packages_update
-    for i in "${PACKAGES[@]}"
+    for i in "${PM_PACKAGES[@]}"
     do
         package_install $i
     done
@@ -123,51 +138,79 @@ install_software(){
     if sh -c "$(curl -fssl https://starship.rs/install.sh)" -- -y 2>/dev/null 1>&2;then 
         good "starship installed"
     else
-        warn "starship failed to install"
+        error "starship failed to install"
     fi
+    msg "installing rust..."
+    if sh -c "$(curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf)";then
+        good "rust installed"
+    else
+        error "rust failed to install"
+    fi
+
 }
 copy_files(){
     msg "copying $1 to $2"
-    if cp $1 $2 2>/dev/null ;then
-        good "copied $1 to $2"
+    if [ -d $1 ]; then
+        if cp -TR $1 $2 2>/dev/null ;then
+            good "copied $1 to $2"
+            chown -R $USER:$USER $2 
+        else
+            error "failed to copy $1 to $2"
+        fi
     else
-        error "failed to copy $1 to $2"
+        if cp $1 $2 2>/dev/null ;then
+            good "copied $1 to $2"
+            chown -R $USER:$USER $2 
+        else
+            error "failed to copy $1 to $2"
+        fi
     fi
 }
 configure(){
-    if zsh --version 2>/dev/null 1>&2;then
-        msg "setting zsh to $USER's default shell"
-        usermod --shell /usr/bin/zsh $USER 2>/dev/null 1>&2
-        su $USER -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended --keep-zshrc
-    fi
-    if mkdir -p "$HOME/.config/nvim" 2>/dev/null 1>&2; then
-        good "nvim configuation directory made"
-    fi
-    cd $CONFDIR
+    cd $DOTFILES
     copy_files .zshrc $HOME
     copy_files starship.toml $HOME/.config
     copy_files .profile $HOME
     copy_files .vimrc $HOME
     copy_files .tmux.conf $HOME
-    copy_files init.vim $HOME/.config/nvim
-    chown -R $USER:$USER $HOME/.zshrc $HOME/.vimrc $HOME/.profile $HOME/.tmux.conf $HOME/.config/starship.toml $HOME/.config/nvim
+    copy_files nvim $HOME/.config/nvim
+    copy_files i3 $HOME/.config/i3
+    copy_files polybar $HOME/.config/polybar
+    copy_files fish $HOME/.config/fish
+    copy_files kitty $HOME/.config/kitty
     cd ..
 	return 0;
 }
 main(){
-if ! check_root;then
-   exit 1 
-fi
-if check_location; then
-    config_packageman
-    if check_internet;then
-        install_software
+    if [ $# -gt 0 ]; then
+        if ! check_root;then
+           exit 1 
+        fi
+        if check_location; then
+            config_packageman
+        else
+            exit 2
+        fi
+        for arg in $@; do
+            case $arg in
+                -c|--configure)
+                    configure
+                    ;;
+                -f|--install)
+                    if check_internet;then
+                        install_software
+                    fi
+                    ;;
+                -h|--help|*)
+                    usage()
+                    exit 0
+                    ;;
+            esac
+        done
+    else 
+        usage()
+        exit 0
     fi
-    configure
-    exit 0
 #    su $USER -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-else 
-    exit 1
-fi
 }
 main
