@@ -3,6 +3,9 @@ ZSHSYNHIGH="zsh-syntax-highlighting"
 ZSHAUTOSUGG="zsh-autosuggestions"
 ZSHDIR="$HOME/.zsh"
 install_zsh-plug(){
+    msg "setting zsh to $USER's default shell"
+    usermod --shell /usr/bin/zsh $USER 2>/dev/null 1>&2
+    su $USER -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended --keep-zshrc
     su $USER -c "mkdir $ZSHDIR"  
     msg "downloading $ZSHSYNHIGH files... "
     if git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSHDIR/$ZSHSYNHIGH 2>/dev/null 1>&2; then
