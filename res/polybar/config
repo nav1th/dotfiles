@@ -1,6 +1,6 @@
 [colour]
-dark = #1e1e1e
-dark-alt = #444
+dark = #e61e1e1e
+dark-alt = #e6444
 light = #dfdfdf
 light-alt = #999
 primary = #ffb52a
@@ -10,18 +10,18 @@ light-red = #D95B5B
 light-green = #249824
 light-purple = #A44BA0
 
-yellow = #00bbff
-blue = #00bbff
-orange = #ff7b00
-red = #ff0000
-green = #11FF11
-sealine = #00CF91
-purple = #7700ff
-pink = #FF77BF
-cyan = #00e5dd
+yellow = #e600bbff
+blue = #e600bbff
+orange = #e6ff7b00
+red = #e6ff0000
+green = #e611FF11
+sealine = #e600CF91
+purple = #e67700ff
+pink = #e6FF77BF
+cyan = #e600e5dd
 
 fav-purple = #6633FF
-dark-red = #311
+dark-red = #e6311
 dark-green = #131
 dark-purple = #201134
 gray = #999
@@ -103,51 +103,29 @@ label = %title:0:30:...%
 [module/battery]
 type = internal/battery
 
-; This is useful in case the battery never reports 100% charge
 full-at = 99
 
-; Use the following command to list batteries and adapters:
-; $ ls -1 /sys/class/power_supply/
 battery = BAT1
 adapter = ACAD
 
-; If an inotify event haven't been reported in this many
-; seconds, manually poll for new values.
-;
-; Needed as a fallback for systems that don't report events
-; on sysfs/procfs.
-;
-; Disable polling by setting the interval to 0.
-;
-; Default: 5
 poll-interval = 5
-; see "man date" for details on how to format the time string
-; NOTE: if you want to use syntax tags here you need to use %%{...}
-; Default: %H:%M:%S
 time-format = %H:%M
 
 format-charging = <animation-charging> <label-charging>
 format-discharging = <ramp-capacity> <label-discharging>
 format-charging-underline = ${colour.green}
+format-full-underline = ${color.blue}
 format-discharging-underline = ${colour.red}
 
-;format-full = <ramp-capacity> <label-full>
+format-full = <ramp-capacity> <label-full>
+
+label-charging = %percentage%%
+
+label-discharging = %percentage%%
 
 ; Available tokens:
 ;   %percentage% (default)
-;   %time%
-;   %consumption% (shows current charge rate in watts)
-label-charging = Charging %percentage%%
-
-; Available tokens:
-;   %percentage% (default)
-;   %time%
-;   %consumption% (shows current discharge rate in watts)
-label-discharging = Discharging %percentage%%
-
-; Available tokens:
-;   %percentage% (default)
-label-full = Fully charged
+label-full = 100%
 
 ; Only applies if <ramp-capacity> is used
 ramp-capacity-0 = 
@@ -194,18 +172,17 @@ scroll-down = pulseaudio-control --volume-max 130 down
 
 [module/cpu]
 type = internal/cpu
-format-prefix = "cpu "
+format = <label> 
 format-prefix-foreground = ${colour.light-alt}
 format-underline = ${colour.purple}
-label = %percentage:2%%
+label = CPU %percentage:2%%
+interval = 0.5
 
 [module/memory]
 type = internal/memory
-format-prefix = "mem "
-format-prefix-foreground = ${colour.light-alt}
+format = <label> 
 format-underline = ${colour.orange}
-;label = %percentage_used%%
-label = %mb_used%
+label = MEM %gb_used%/%gb_free%
 
 [module/wlan]
 type = internal/network
@@ -260,25 +237,22 @@ format-underline = ${colour.blue}
 
 label = %date% %time%
 
+
 [module/temperature]
+interval=0.5
 type = internal/temperature
 thermal-zone = 0
 warn-temperature = 60
 
 format = <label>
 format-underline = ${colour.green}
-format-warn = <ramp> <label-warn>
-format-warn-underline = ${self.format-underline}
+format-warn = <label-warn>
+format-warn-underline = ${colour-red}
+
 
 label = %temperature-c%
 label-warn = %temperature-c%
-label-warn-foreground = ${colour.red}
 
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-ramp-foreground = ${colour.light-alt}
-;Workspaces
 
 [module/workspaces]
 type = internal/i3

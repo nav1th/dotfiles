@@ -9,7 +9,8 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 # Colors
-#set $image_background 
+set $image_background ~/Pictures/desert2.png
+set $lock_background ~/Pictures/desert.png
 set $i3_background      #2B2C2B
 set $i3_text            #F9FAF9
 set $i3_separator       #454947
@@ -47,12 +48,9 @@ exec --no-startup-id compton -b -f
 new_window pixel 1
 new_float normal
 
-# Hide borders
-hide_edge_borders none
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
-
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
@@ -65,8 +63,6 @@ bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-:q
 bindsym Ctrl+Print exec "scrot -u ~/Pictures/screenshots/%Y-%m-%d%H:%M:%S.png"
 bindsym Print exec "scrot ~/Pictures/screenshots/%Y-%m-%d%H:%M:%S.png"
 
-#hide_edge_borders both
-default_border pixel 0
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -126,8 +122,8 @@ bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
-bindsym $mod+F1 exec --no-startup-id "i3lock -i $image_background -e"
-exec xautolock -time 10 -locker "i3lock -i $image_background -e"
+bindsym $mod+F1 exec --no-startup-id "i3lock -i $lock_background -e"
+exec xautolock -time 10 -locker "i3lock -i $lock_background -e"
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -214,22 +210,24 @@ bindsym $mod+r mode "resize"
 
 
 #Polybar
-exec_always --no-startup-id sh $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id sh ~/.config/polybar/launch.sh
 
 ### i3-gaps stuff ###
-
-# Necessary for i3-gaps to work properly (pixel can be any value)
-for_window [class="^.*"] border pixel 3
 
 # Smart Gaps
 smart_gaps on
 
-# Smart Borders
+# Necessary for i3-gaps to work properly (pixel can be any value)
+for_window [class="^.*"] border pixel 3
+
+#  Borders
+default_border pixel 0
 smart_borders on
+hide_edge_borders both
 
 # Set inner/outer gaps
 gaps inner 14
 gaps outer 0
 
-#exec --no-startup-id feh --bg-scale $image_background
+exec --no-startup-id feh --bg-scale $image_background
 
