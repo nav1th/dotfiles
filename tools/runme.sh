@@ -1,5 +1,4 @@
 #!/bin/bash
-
 USER=$(who | awk '{print $1}' | head -n1)
 HOME="/home/$USER"
 DOTFILES="res"
@@ -24,14 +23,6 @@ warn(){
 error(){
     printf >&2 "\033[91;1mERROR: $1\033[0m\n"
 }
-
-check_root(){
-    if [ `id -u` -ne 0 ]; then
-        error "you are not root"
-        return 1
-    fi
-    return 0
-}
  
 usage() { 
     cat 1>&2 <<EOF
@@ -50,7 +41,7 @@ EOF
 check_location(){
     basename="$(dirname $0)"
     realpath="$(realpath $basename)"
-    if [$realpath -ne $PWD 2>/dev/null];then
+    if [[ $realpath -ne $PWD ]];then
         error "need to be in the script directory to run script"
         return 1
     fi
@@ -59,11 +50,11 @@ check_location(){
 check_internet(){
     tool=ping
     msg "checking internet connection..."
-    if ! $tool -c 4 8.8.8.8 >/dev/null 2>&1; then
+    if ! $tool -c 4 8.8.8.8 2>/dev/null 1>&2; then
         error "not connected to the internet"
         return 1
     else 
-	good "internet connection working"
+        good "internet connection working"
     fi
 }
 config_packageman(){
@@ -141,7 +132,7 @@ install_software(){
         error "starship failed to install"
     fi
     msg "installing rust..."
-    if sh -c "$(curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf)";then
+    if sh -c "$(curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf)" -- -y 2>/dev/null 1>&2;then
         good "rust installed"
     else
         error "rust failed to install"
@@ -182,35 +173,36 @@ configure(){
 	return 0;
 }
 main(){
-    if [ $# -gt 0 ]; then
-        if ! check_root;then
-           exit 1 
-        fi
-        if check_location; then
-            config_packageman
-        else
-            exit 2
-        fi
+    if [[ $# -gt 0 ]]; then
         for arg in $@; do
             case $arg in
                 -c|--configure)
                     configure
                     ;;
                 -f|--install)
-                    if check_internet;then
-                        install_software
+                    if [ $EUID -eq 0 ];then
+                        if check_location; then
+                            config_packageman
+                        else
+                            exit 1
+                        fi
+                        if check_internet;then
+                            install_software
+                        fi
+                    else
+                        error "must be root to install... exiting..."
+                        exit 1
                     fi
                     ;;
                 -h|--help|*)
-                    usage()
+                    usage
                     exit 0
                     ;;
             esac
         done
     else 
-        usage()
+        usage
         exit 0
     fi
-#    su $USER -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 }
-main
+main $@

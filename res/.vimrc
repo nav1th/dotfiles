@@ -60,7 +60,6 @@ set whichwrap+=<,>,h,l
 " Ignore case when searching
 set ignorecase
 
-set nowrap
 
 " When searching try to be smart about cases
 set smartcase
@@ -113,7 +112,7 @@ set tw=500
 " Indentation & wrap
 set ai "Auto indent
 set si "Smart indent
-set wrap "Wrap lines
+set nowrap "Wrap lines
 
 
 " Enable 256 colors palette in Gnome Terminal
