@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 USER=$(who | awk '{print $1}' | head -n1)
 HOME="/home/$USER"
 DOTFILES="res"
@@ -16,6 +16,19 @@ good(){
 msg(){
     printf "\033[1m-->>: $1\033[0m\n"
 }
+go_ahead(){
+    printf "\033[1m-->>: $1 (y|N): "
+    read answer
+    printf "\033[0m"
+    case $answer in
+        y|Y|[y,Y][e,E][s,S])
+            return 0
+            ;;
+        n|N|[n,N][o,O]|*)
+            return 1
+            ;;
+    esac
+}
 
 warn(){
     printf >&2 "\033[93;1mWARNING: $1\033[0m\n"
@@ -32,6 +45,7 @@ USAGE:
 FLAGS:
     -c, --configure         Configure dotfiles in correct places
     -i, --install           Install specified software
+    -b, --backup            Backup dotfiles to this repo
     -h, --help              Prints help information
 
 EOF
@@ -170,16 +184,35 @@ configure(){
     copy_files fish $HOME/.config/fish
     copy_files kitty $HOME/.config/kitty
     cd ..
-	return 0;
+	return 0
+}
+backup(){
+    cd $DOTFILES
+    copy_files $HOME/.zshrc . 
+    copy_files $HOME/.config/starship.toml .
+    copy_files $HOME/.profile . 
+    copy_files $HOME/.vimrc .
+    copy_files $HOME/.tmux.conf .
+    copy_files $HOME/.config/nvim/init.vim nvim
+    copy_files $HOME/.config/i3/config i3
+    copy_files $HOME/.config/polybar/* polybar
+    copy_files $HOME/.config/fish/* fish
+    copy_files $HOME/.config/kitty/kitty.conf kitty
+    cd ..
+    return 0
 }
 main(){
     if [[ $# -gt 0 ]]; then
-        for arg in $@; do
-            case $arg in
+        for flag in $@; do
+            case $flag in
                 -c|--configure)
-                    configure
+                    if check_location; then
+                        configure
+                    else
+                        exit 1
+                    fi
                     ;;
-                -f|--install)
+                -i|--install)
                     if [ $EUID -eq 0 ];then
                         if check_location; then
                             config_packageman
@@ -194,6 +227,18 @@ main(){
                         exit 1
                     fi
                     ;;
+                -b|--backup)
+                    if check_location; then
+                        if go_ahead "Are sure you want to backup files (THIS WILL REPLACE DOTFILES IN THIS REPO)?"; then
+                            backup
+                        else
+                            exit 0
+                        fi
+                    else
+                        exit 1
+                    fi
+                    ;; 
+                    #backup
                 -h|--help|*)
                     usage
                     exit 0
