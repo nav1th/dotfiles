@@ -4,7 +4,7 @@
 # Path to your oh-my-zsh installation.
 #oh-my-zsh
 export ZSH="$HOME/.oh-my-zsh"
-source $ZSH/oh-my-zsh.sh 
+source $ZSH/oh-my-zsh.sh 2>/dev/null
 plugins=(git
     colored-man-pages
     python

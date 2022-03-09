@@ -232,15 +232,15 @@ main(){
                     fi
                     ;;
                 -b|--backup)
-                    if check_location; then
+                    #if check_location; then
                         if go_ahead "Are sure you want to backup files (THIS WILL REPLACE DOTFILES IN THIS REPO)?"; then
                             backup
                         else
                             exit 0
                         fi
-                    else
-                        exit 1
-                    fi
+                    #else
+                     #   exit 1
+                    #fi
                     ;; 
                     #backup
                 -h|--help|*)
