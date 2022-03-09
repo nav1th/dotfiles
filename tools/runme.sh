@@ -207,7 +207,11 @@ main(){
             case $flag in
                 -c|--configure)
                     if check_location; then
-                        configure
+                        if go_ahead "Are you sure you want to install dotfiles (THIS WILL REPLACE DOTFILES WITHIN YOUR HOME DIRECTORY)?"; then
+                            configure
+                        else
+                            exit 0
+                        fi
                     else
                         exit 1
                     fi
