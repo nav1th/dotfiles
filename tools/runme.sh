@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 USER=$(who | awk '{print $1}' | head -n1)
 HOME="/home/$USER"
-DOTFILES="res"
 DISTRO=`cat /etc/os-release | grep -v VERSION | grep ID | awk -F '=' '{print $2}'`
+SCRIPT_NAME="$(dirname $0)"
+SCRIPT_DIR="$(realpath $SCRIPT_NAME)"
+ROOT_DIR="${SCRIPT_DIR%/*}"
+DOTFILES=$ROOT_DIR/res
 declare -a PM_PACKAGES=("zsh" "tmux" "vim")
 declare -a CARGO_PACKAGES=("lsd")
 source src/zsh-plug.sh
@@ -53,13 +56,12 @@ EOF
  
 
 check_location(){
-    basename="$(dirname $0)"
-    realpath="$(realpath $basename)"
-    if [[ $realpath -ne $PWD ]];then
+    if [ "$ROOT_DIR" = "$PWD" ];then
+        return 0
+    else
         error "need to be in the script directory to run script"
         return 1
     fi
-    return 0
 }
 check_internet(){
     tool=ping
@@ -232,17 +234,16 @@ main(){
                     fi
                     ;;
                 -b|--backup)
-                    #if check_location; then
+                    if check_location; then
                         if go_ahead "Are sure you want to backup files (THIS WILL REPLACE DOTFILES IN THIS REPO)?"; then
                             backup
                         else
                             exit 0
                         fi
-                    #else
-                     #   exit 1
-                    #fi
+                    else
+                        exit 1
+                    fi
                     ;; 
-                    #backup
                 -h|--help|*)
                     usage
                     exit 0
