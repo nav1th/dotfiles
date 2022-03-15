@@ -1,6 +1,5 @@
-" - Avoid using standard Vim directory names like 'plugin'
 set nocompatible
-filetype plugin indent on
+filetype plugin on
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
   silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
@@ -8,8 +7,11 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
 endif
 call plug#begin('~/.vim/plugged')
     Plug 'preservim/nerdtree'
-    Plug 'preservim/tagbar'
     Plug 'preservim/vim-pencil'
+    Plug 'preservim/vim-markdown'
+    Plug 'prabirshrestha/asyncomplete.vim'
+    Plug 'prabirshrestha/asyncomplete-lsp.vim'
+    Plug 'prabirshrestha/vim-lsp'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
     Plug 'tpope/vim-commentary'
@@ -22,34 +24,31 @@ call plug#begin('~/.vim/plugged')
     Plug 'flazz/vim-colorschemes'
     Plug 'luochen1990/rainbow'
     Plug 'rafi/awesome-vim-colorschemes'
-    Plug 'ycm-core/YouCompleteMe'
     Plug 'jiangmiao/auto-pairs'
     Plug 'rust-lang/rust.vim'
     Plug 'junegunn/fzf'
     Plug 'amiorin/vim-project'
     Plug 'moll/vim-bbye'
     Plug 'neomake/neomake'
-    Plug 'SirVer/ultisnips'
-    Plug 'honza/vim-snippets'
     Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
     Plug 'ryanoasis/vim-devicons'
     Plug 'Yggdroot/indentLine'
+    Plug 'mattn/vim-lsp-settings'
+    Plug 'godlygeek/tabular'
 call plug#end()
 
 syntax enable
-set ruler
+"set ruler
 set number
 let mapleader = ","
 
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
 
-" Avoid garbled characters in Chinese language windows OS
+" Lang Settings
 let $LANG='en'
 set langmenu=en
 
-" Height of the command bar
-"set cmdheight=3
 
 " A buffer becomes hidden when it is abandoned
 set hid
@@ -60,7 +59,6 @@ set whichwrap+=<,>,h,l
 
 " Ignore case when searching
 set ignorecase
-
 
 " When searching try to be smart about cases
 set smartcase
@@ -86,18 +84,12 @@ set mat=2
 " No annoying sound on errors
 set visualbell
 
-set t_vb=
+"set t_vb=
 set tm=500
 set history=500
 set nobackup
 set nowb
 set noswapfile
-"set noshowmode
-"set noshowcmd
-set laststatus=2           " Always display the status bar
-"python3 from powerline.vim import setup as powerline_setup
-"python3 powerline_setup()
-"python3 del powerline_setup
 
 
 "tab stuff
@@ -135,9 +127,6 @@ set encoding=UTF-8
 
 "rainbow
 let g:rainbow_active = 1
-" Search options
-map <space> /
-map <C-space> ?
 
 " Spell checker
 map <leader>ss :setlocal spell!<cr>
@@ -152,10 +141,6 @@ autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | e
 " Exit Vim if NERDTree is the only window remaining in the only tab.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
-" Tagbar
-nmap <F8> :TagbarToggle<CR>
-
-
 "lightline
 let g:airline#extensions#tabline#enabled = 1
 
@@ -163,15 +148,6 @@ let g:airline#extensions#tabline#enabled = 1
 colorscheme purify
 let g:airline_theme='purify'
 
+"autocomplete
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 
-let java_highlight_functions = 1
-let java_highlight_all = 1
-set filetype=java
-
-" Some more highlights, in addition to those suggested by cmcginty
-highlight link javaScopeDecl Statement
-highlight link javaType Type
-highlight link javaDocTags PreProc
-set omnifunc=csscomplete#CompleteCSS
-set laststatus=2 
-set t_Co=256
