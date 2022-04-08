@@ -11,6 +11,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'mhinz/vim-signify'
     Plug 'mhinz/vim-startify'
     Plug 'moll/vim-bbye'
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'neomake/neomake'
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
     Plug 'preservim/nerdtree'
