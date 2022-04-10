@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 USER=$(who | awk '{print $1}' | head -n1)
 HOME="/home/$USER"
-DISTRO=`cat /etc/os-release | grep -v VERSION | grep ID | awk -F '=' '{print $2}'`
 SCRIPT_NAME="$(dirname $0)"
 SCRIPT_DIR="$(realpath $SCRIPT_NAME)"
 ROOT_DIR="${SCRIPT_DIR%/*}"
 DOTFILES=$ROOT_DIR/res
+if [ -f /etc/os-release ];then
+    DISTRO=`cat /etc/os-release | grep -v VERSION | grep ID | awk -F '=' '{print $2}'`
+else
+    DISTRO=idk
 declare -a PM_PACKAGES=("zsh" "tmux" "vim")
 declare -a CARGO_PACKAGES=("lsd")
 source src/zsh-plug.sh
@@ -196,7 +199,8 @@ backup(){
     copy_files $HOME/.tmux.conf .
     copy_files $HOME/.config/nvim/init.vim nvim
     copy_files $HOME/.config/i3/config i3
-    copy_files $HOME/.config/polybar/* polybar
+    copy_files $HOME/.config/polybar/launch.sh polybar
+    copy_files $HOME/.config/polybar/config polybar
     copy_files $HOME/.config/fish/* fish
     copy_files $HOME/.config/kitty/kitty.conf kitty
     cd ..
