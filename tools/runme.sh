@@ -12,7 +12,6 @@ source src/zsh-plug.sh
 source src/nodejs.sh
 source src/nvim.sh
 
-
 good(){
     printf "\033[92;1mOK: $1\033[0m\n"
 }
