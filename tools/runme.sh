@@ -5,10 +5,7 @@ SCRIPT_NAME="$(dirname $0)"
 SCRIPT_DIR="$(realpath $SCRIPT_NAME)"
 ROOT_DIR="${SCRIPT_DIR%/*}"
 DOTFILES=$ROOT_DIR/res
-if [ -f /etc/os-release ];then
-    DISTRO=`cat /etc/os-release | grep -v VERSION | grep ID | awk -F '=' '{print $2}'`
-else
-    DISTRO=idk
+DISTRO=`cat /etc/os-release | grep -v VERSION | grep ID | awk -F '=' '{print $2}'`
 declare -a PM_PACKAGES=("zsh" "tmux" "vim")
 declare -a CARGO_PACKAGES=("lsd")
 source src/zsh-plug.sh
