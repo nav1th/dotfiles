@@ -156,14 +156,14 @@ install_software(){
 copy_files(){
     msg "copying $1 to $2"
     if [ -d $1 ]; then
-        if rsync -r $1 $2 2>/dev/null ;then
+        if rsync -a $1 $2 &>/dev/null ;then
             good "copied $1 to $2"
             chown -R $USER:$USER $2 
         else
             error "failed to copy $1 to $2"
         fi
     else
-        if rsync $1 $2 2>/dev/null ;then
+        if rsync $1 $2 &>/dev/null ;then
             good "copied $1 to $2"
             chown -R $USER:$USER $2 
         else
@@ -179,8 +179,8 @@ configure(){
     copy_files $DOTFILES/.tmux.conf $HOME
     copy_files $DOTFILES/nvim $HOME/.config/nvim
     copy_files $DOTFILES/i3 $HOME/.config/i3
-    copy_files $DOTFILES/polybar $HOME/.config/polybar
-    copy_files $DOTFILES/fish $HOME/.config/fish
+    copy_files $DOTFILES/polybar/ $HOME/.config/polybar
+    copy_files $DOTFILES/fish/ $HOME/.config/fish
     copy_files $DOTFILES/kitty $HOME/.config/kitty
     copy_files $DOTFILES/ranger $HOME/.config/ranger
 	return 0
@@ -193,9 +193,8 @@ backup(){
     copy_files $HOME/.tmux.conf $DOTFILES 
     copy_files $HOME/.config/nvim/init.vim $DOTFILES/nvim
     copy_files $HOME/.config/i3/config $DOTFILES/i3
-    copy_files $HOME/.config/polybar/launch.sh $DOTFILES/polybar
-    copy_files $HOME/.config/polybar/config $DOTFILES/polybar
-    copy_files $HOME/.config/fish $DOTFILES/fish
+    copy_files $HOME/.config/polybar/* $DOTFILES/polybar
+    copy_files $HOME/.config/fish/ $DOTFILES/fish
     copy_files $HOME/.config/kitty/kitty.conf $DOTFILES/kitty
     copy_files $HOME/.config/ranger/rc.conf $DOTFILES/ranger
     return 0
