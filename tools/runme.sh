@@ -43,14 +43,13 @@ error(){
 usage() { 
     cat 1>&2 <<EOF
 USAGE:
-    ./runme.sh [FLAGS] 
+    ./tools/runme.sh [FLAGS] 
 
 FLAGS:
     -c, --configure         Configure dotfiles in correct places
     -i, --install           Install specified software
     -b, --backup            Backup dotfiles to this repo
     -h, --help              Prints help information
-
 EOF
 }
  
@@ -158,14 +157,14 @@ install_software(){
 copy_files(){
     msg "copying $1 to $2"
     if [ -d $1 ]; then
-        if cp -TR $1 $2 2>/dev/null ;then
+        if rsync -r $1 $2 2>/dev/null ;then
             good "copied $1 to $2"
             chown -R $USER:$USER $2 
         else
             error "failed to copy $1 to $2"
         fi
     else
-        if cp $1 $2 2>/dev/null ;then
+        if rsync 2>/dev/null ;then
             good "copied $1 to $2"
             chown -R $USER:$USER $2 
         else
@@ -185,6 +184,7 @@ configure(){
     copy_files polybar $HOME/.config/polybar
     copy_files fish $HOME/.config/fish
     copy_files kitty $HOME/.config/kitty
+    copy_files ranger $HOME/.config/ranger
     cd ..
 	return 0
 }
@@ -199,8 +199,9 @@ backup(){
     copy_files $HOME/.config/i3/config i3
     copy_files $HOME/.config/polybar/launch.sh polybar
     copy_files $HOME/.config/polybar/config polybar
-    copy_files $HOME/.config/fish/* fish
+    copy_files $HOME/.config/fish fish
     copy_files $HOME/.config/kitty/kitty.conf kitty
+    copy_files $HOME/.config/ranger/rc.conf ranger
     cd ..
     return 0
 }
