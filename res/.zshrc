@@ -62,3 +62,5 @@ if [ "$TMUX" = "" ]; then tmux; fi
 #powerline-daemon -q
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+[ -f "/home/glitch/.ghcup/env" ] && source "/home/glitch/.ghcup/env" # ghcup-env

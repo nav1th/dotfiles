@@ -1,40 +1,45 @@
 set nocompatible
 filetype plugin on
+
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+
 if empty(glob(data_dir . '/autoload/plug.vim'))
   silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+
 call plug#begin('~/.vim/plugged')
+    Plug 'amiorin/vim-project'
+    Plug 'edkolev/tmuxline.vim'
+    Plug 'flazz/vim-colorschemes'
+    Plug 'godlygeek/tabular'
+    Plug 'jiangmiao/auto-pairs'
+    Plug 'junegunn/fzf'
+    Plug 'junegunn/goyo.vim'
+    Plug 'luochen1990/rainbow'
+    Plug 'mhinz/vim-signify'
+    Plug 'mhinz/vim-startify'
+    Plug 'moll/vim-bbye'
+    Plug 'mtth/scratch.vim'
+    Plug 'neomake/neomake'
     Plug 'preservim/nerdtree'
-    Plug 'preservim/vim-pencil'
     Plug 'preservim/vim-markdown'
-    Plug 'prabirshrestha/asyncomplete.vim'
-    Plug 'prabirshrestha/asyncomplete-lsp.vim'
-    Plug 'prabirshrestha/vim-lsp'
+    Plug 'preservim/vim-pencil'
+    Plug 'rafi/awesome-vim-colorschemes'
+    Plug 'rust-lang/rust.vim'
+    Plug 'ryanoasis/vim-devicons'
+    Plug 'sheerun/vim-polyglot'
+    Plug 'sudar/vim-arduino-syntax'
+    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+    Plug 'tpope/tpope-vim-abolish'
+    Plug 'tpope/vim-capslock'
+    Plug 'tpope/vim-sensible'
+    Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-fugitive'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
-    Plug 'tpope/vim-commentary'
-    Plug 'tpope/tpope-vim-abolish'
-    Plug 'tpope/vim-fugitive'
-    Plug 'mhinz/vim-startify'
-    Plug 'mhinz/vim-signify'
-    Plug 'edkolev/tmuxline.vim'
-    Plug 'sheerun/vim-polyglot'
-    Plug 'flazz/vim-colorschemes'
-    Plug 'luochen1990/rainbow'
-    Plug 'rafi/awesome-vim-colorschemes'
-    Plug 'jiangmiao/auto-pairs'
-    Plug 'rust-lang/rust.vim'
-    Plug 'junegunn/fzf'
-    Plug 'amiorin/vim-project'
-    Plug 'moll/vim-bbye'
-    Plug 'neomake/neomake'
-    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-    Plug 'ryanoasis/vim-devicons'
+    Plug 'ycm-core/YouCompleteMe'
     Plug 'Yggdroot/indentLine'
-    Plug 'mattn/vim-lsp-settings'
-    Plug 'godlygeek/tabular'
 call plug#end()
 
 syntax enable
@@ -105,7 +110,7 @@ set tw=500
 " Indentation & wrap
 set ai "Auto indent
 set si "Smart indent
-set nowrap "Wrap lines
+set wrap "Wrap lines
 
 
 " Enable 256 colors palette in Gnome Terminal
@@ -150,4 +155,26 @@ let g:airline_theme='purify'
 
 "autocomplete
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+let g:ycm_clangd_args = ['-log=verbose', '-pretty']
+let g:ycm_clangd_uses_ycmd_caching = 0
+let g:scratch_autohide=&hidden
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
 
+"Toggle YouCompleteMe on and off with F3
+function Toggle_ycm()
+    if g:ycm_show_diagnostics_ui == 0
+        let g:ycm_auto_trigger = 1
+        let g:ycm_show_diagnostics_ui = 1
+        :YcmRestartServer
+        :e
+        :echo "YCM on"
+    elseif g:ycm_show_diagnostics_ui == 1
+        let g:ycm_auto_trigger = 0
+        let g:ycm_show_diagnostics_ui = 0
+        :YcmRestartServer
+        :e
+        :echo "YCM off"
+    endif
+endfunction
+map <F3> :call Toggle_ycm() <CR>
