@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -e
 USER=$(who | awk '{print $1}' | head -n1)
 HOME="/home/$USER"
 SCRIPT_NAME="$(dirname $0)"
@@ -164,7 +163,7 @@ copy_files(){
             error "failed to copy $1 to $2"
         fi
     else
-        if rsync 2>/dev/null ;then
+        if rsync $1 $2 2>/dev/null ;then
             good "copied $1 to $2"
             chown -R $USER:$USER $2 
         else
@@ -173,36 +172,32 @@ copy_files(){
     fi
 }
 configure(){
-    cd $DOTFILES
-    copy_files .zshrc $HOME
-    copy_files starship.toml $HOME/.config
-    copy_files .profile $HOME
-    copy_files .vimrc $HOME
-    copy_files .tmux.conf $HOME
-    copy_files nvim $HOME/.config/nvim
-    copy_files i3 $HOME/.config/i3
-    copy_files polybar $HOME/.config/polybar
-    copy_files fish $HOME/.config/fish
-    copy_files kitty $HOME/.config/kitty
-    copy_files ranger $HOME/.config/ranger
-    cd ..
+    copy_files $DOTFILES/.zshrc $HOME
+    copy_files $DOTFILES/starship.toml $HOME/.config
+    copy_files $DOTFILES/.zprofile $HOME
+    copy_files $DOTFILES/.vimrc $HOME
+    copy_files $DOTFILES/.tmux.conf $HOME
+    copy_files $DOTFILES/nvim $HOME/.config/nvim
+    copy_files $DOTFILES/i3 $HOME/.config/i3
+    copy_files $DOTFILES/polybar $HOME/.config/polybar
+    copy_files $DOTFILES/fish $HOME/.config/fish
+    copy_files $DOTFILES/kitty $HOME/.config/kitty
+    copy_files $DOTFILES/ranger $HOME/.config/ranger
 	return 0
 }
 backup(){
-    cd $DOTFILES
-    copy_files $HOME/.zshrc . 
-    copy_files $HOME/.config/starship.toml .
-    copy_files $HOME/.profile . 
-    copy_files $HOME/.vimrc .
-    copy_files $HOME/.tmux.conf .
-    copy_files $HOME/.config/nvim/init.vim nvim
-    copy_files $HOME/.config/i3/config i3
-    copy_files $HOME/.config/polybar/launch.sh polybar
-    copy_files $HOME/.config/polybar/config polybar
-    copy_files $HOME/.config/fish fish
-    copy_files $HOME/.config/kitty/kitty.conf kitty
-    copy_files $HOME/.config/ranger/rc.conf ranger
-    cd ..
+    copy_files $HOME/.zshrc $DOTFILES  
+    copy_files $HOME/.config/starship.toml $DOTFILES 
+    copy_files $HOME/.zprofile $DOTFILES  
+    copy_files $HOME/.vimrc $DOTFILES 
+    copy_files $HOME/.tmux.conf $DOTFILES 
+    copy_files $HOME/.config/nvim/init.vim $DOTFILES/nvim
+    copy_files $HOME/.config/i3/config $DOTFILES/i3
+    copy_files $HOME/.config/polybar/launch.sh $DOTFILES/polybar
+    copy_files $HOME/.config/polybar/config $DOTFILES/polybar
+    copy_files $HOME/.config/fish $DOTFILES/fish
+    copy_files $HOME/.config/kitty/kitty.conf $DOTFILES/kitty
+    copy_files $HOME/.config/ranger/rc.conf $DOTFILES/ranger
     return 0
 }
 main(){
