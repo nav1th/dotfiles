@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 USER=$(who | awk '{print $1}' | head -n1)
 HOME="/home/$USER"
 SCRIPT_NAME="$(dirname $0)"
@@ -55,7 +56,7 @@ EOF
  
 
 check_location(){
-    if [ "$ROOT_DIR" = "$PWD" ];then
+    if [ "$ROOT_DIR" = `pwd -P` ];then
         return 0
     else
         error "need to be in the script directory to run script"
