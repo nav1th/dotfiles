@@ -3,10 +3,12 @@ filetype off
 call plug#begin('~/.vim/plugged')
     Plug 'amiorin/vim-project'
     Plug 'edkolev/tmuxline.vim'
-    Plug 'flazz/vim-colorschemes'
+    Plug 'elzr/vim-json'
     Plug 'godlygeek/tabular'
     Plug 'jiangmiao/auto-pairs'
     Plug 'junegunn/fzf'
+    Plug 'junegunn/goyo.vim'
+    Plug 'junegunn/limelight.vim'
     Plug 'luochen1990/rainbow'
     Plug 'mhinz/vim-signify'
     Plug 'mhinz/vim-startify'
@@ -14,6 +16,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'neomake/neomake'
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'plasticboy/vim-markdown'
     Plug 'preservim/nerdtree'
     Plug 'preservim/vim-markdown'
     Plug 'preservim/vim-pencil'
@@ -25,8 +28,11 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/tpope-vim-abolish'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-fugitive'
+    Plug 'tribela/vim-transparent'
     Plug 'vim-airline/vim-airline'
     Plug 'vim-airline/vim-airline-themes'
+    Plug 'vim-pandoc/vim-pandoc-syntax'
+    Plug 'SidOfc/mkdx'
     Plug 'Yggdroot/indentLine'
 call plug#end()
 
@@ -134,12 +140,40 @@ autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | e
 " Exit Vim if NERDTree is the only window remaining in the only tab.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
-"lightline
+
+
+autocmd BufNewFile,BufRead *.asm set filetype=nasm
+
+
+
+"Markdown
+let g:vim_markdown_folding_disabled = 1
+
+" do not use conceal feature, the implementation is not so good
+let g:vim_markdown_conceal = 0
+
+" disable math tex conceal feature
+let g:tex_conceal = ""
+let g:vim_markdown_math = 1
+
+" support front matter of various format
+let g:vim_markdown_frontmatter = 1  " for YAML format
+let g:vim_markdown_toml_frontmatter = 1  " for TOML format
+let g:vim_markdown_json_frontmatter = 1  " for JSON format
+
+augroup pandoc_syntax
+    au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+augroup END
+
+
+"Airline
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline_powerline_fonts = 1
 
 "Colors
-colorscheme purify
-let g:airline_theme='purify'
 
-"autocomplete
+colorscheme minimalist
+let g:airline_theme='minimalist'
 
