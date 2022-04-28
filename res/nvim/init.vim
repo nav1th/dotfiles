@@ -115,17 +115,13 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
 
 
 "encoding
 set encoding=UTF-8
 
 "rainbow
-let g:rainbow_active = 1
+"let g:rainbow_active = 1
 
 " Spell checker
 map <leader>ss :setlocal spell!<cr>
@@ -135,10 +131,12 @@ nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 " Start NERDTree. If a file is specified, move the cursor to its window.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
-" Exit Vim if NERDTree is the only window remaining in the only tab.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+fun! ExecNerd()
+    if &ft =~ 'markdown\|markdown.pandoc'
+        return
+    endif
+    NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+endfun
 
 
 
@@ -166,6 +164,11 @@ augroup pandoc_syntax
 augroup END
 
 
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * call ExecNerd()
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
 "Airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#left_sep = ' '
@@ -173,7 +176,6 @@ let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline_powerline_fonts = 1
 
 "Colors
-
 colorscheme minimalist
 let g:airline_theme='minimalist'
 
