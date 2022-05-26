@@ -1,6 +1,7 @@
-local colorscheme = "sonokai"
-vim.g.solokai_style = 'shusia'
-vim.g.sonokai_better_performance = 1
+local colorscheme = "vscode"
+vim.opt.background = "dark"
+vim.g.vscode_style = "dark"
+vim.g.vscode_transparent = 1
 --Configure colorscheme
 local status_ok, _ = pcall(vim.cmd, "colorscheme ".. colorscheme)
 if not status_ok then
@@ -9,7 +10,19 @@ if not status_ok then
 end
 
 --Configure airline colorscheme if airline is installed
-local status_ok, _ = pcall(vim.cmd, "AirlineTheme");
-if status_ok then
-    vim.g.airline_theme = colorscheme
-end
+--require("transparent").setup({
+--  enable = true, -- boolean: enable transparent
+--  extra_groups = { -- table/string: additional groups that should be cleared
+    -- In particular, when you set it to 'all', that means all available groups
+
+    -- example of akinsho/nvim-bufferline.lua
+--    "BufferLineTabClose",
+--    "BufferlineBufferSelected",
+ --   "BufferLineFill",
+ --   "BufferLineBackground",
+  --  "BufferLineSeparator",
+--    "BufferLineIndicatorSelected",
+
+--  },
+--  exclude = {}, -- table: groups you don't want to clear
+--})
