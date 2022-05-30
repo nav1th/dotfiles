@@ -74,6 +74,11 @@ _G.packer_plugins = {
     path = "/home/glitch/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  ["bufferline.nvim"] = {
+    loaded = true,
+    path = "/home/glitch/.local/share/nvim/site/pack/packer/start/bufferline.nvim",
+    url = "https://github.com/akinsho/bufferline.nvim"
+  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/home/glitch/.local/share/nvim/site/pack/packer/start/cmp-buffer",
@@ -149,6 +154,11 @@ _G.packer_plugins = {
     path = "/home/glitch/.local/share/nvim/site/pack/packer/start/nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
   },
+  ["nvim-colorizer.lua"] = {
+    loaded = true,
+    path = "/home/glitch/.local/share/nvim/site/pack/packer/start/nvim-colorizer.lua",
+    url = "https://github.com/norcalli/nvim-colorizer.lua"
+  },
   ["nvim-dap"] = {
     loaded = true,
     path = "/home/glitch/.local/share/nvim/site/pack/packer/start/nvim-dap",
@@ -194,6 +204,11 @@ _G.packer_plugins = {
     path = "/home/glitch/.local/share/nvim/site/pack/packer/start/popup.nvim",
     url = "https://github.com/nvim-lua/popup.nvim"
   },
+  ["rust.vim"] = {
+    loaded = true,
+    path = "/home/glitch/.local/share/nvim/site/pack/packer/start/rust.vim",
+    url = "https://github.com/rust-lang/rust.vim"
+  },
   sonokai = {
     loaded = true,
     path = "/home/glitch/.local/share/nvim/site/pack/packer/start/sonokai",
@@ -203,6 +218,16 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/glitch/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
+  },
+  ["vim-rooter"] = {
+    loaded = true,
+    path = "/home/glitch/.local/share/nvim/site/pack/packer/start/vim-rooter",
+    url = "https://github.com/airblade/vim-rooter"
+  },
+  ["vim-surround"] = {
+    loaded = true,
+    path = "/home/glitch/.local/share/nvim/site/pack/packer/start/vim-surround",
+    url = "https://github.com/tpope/vim-surround"
   },
   ["vscode.nvim"] = {
     loaded = true,
