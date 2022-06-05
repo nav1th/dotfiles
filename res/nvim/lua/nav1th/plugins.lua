@@ -73,6 +73,7 @@ return packer.startup(function(use)
     use 'neovim/nvim-lspconfig' -- enable LSP
     use 'jose-elias-alvarez/null-ls.nvim' -- for formatters and linters
     use 'tamago324/nlsp-settings.nvim' -- language server settings defined in json for
+    use 'simrat39/rust-tools.nvim' -- for extra rust-analyzer support
 
     --debugging
     use 'mfussenegger/nvim-dap'

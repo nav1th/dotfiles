@@ -6,3 +6,4 @@ end
 require "nav1th.lsp.configs"
 require("nav1th.lsp.handlers").setup()
 require "nav1th.lsp.null-ls"
+require "nav1th.lsp.rust-tools"

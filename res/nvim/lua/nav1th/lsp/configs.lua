@@ -5,17 +5,14 @@ end
 
 local lspconfig = require("lspconfig")
 
-local servers = { "jsonls", "sumneko_lua","pyright" }
+local servers = { "jsonls", "sumneko_lua","pyright"}
 
 lsp_installer.setup {
-	ensure_installed = servers
+	ensure_installed = servers -- automatically installs servers listed
 }
 
-for _, server in pairs({"rust_analyzer","clangd"}) do
-    table.insert(servers, server)
-end
 
-for _, server in pairs(servers) do
+for _, server in pairs(servers) do --just configures servers installed by lsp-installer
 	local opts = {
 		on_attach = require("nav1th.lsp.handlers").on_attach,
 		capabilities = require("nav1th.lsp.handlers").capabilities,
@@ -25,4 +22,10 @@ for _, server in pairs(servers) do
 	 	opts = vim.tbl_deep_extend("force", server_custom_opts, opts)
 	end
     lspconfig[server].setup(opts)
+end
+
+local installed_servers = {"taplo","asm_lsp","rust_analyzer"} -- for servers i already have installed as binaries
+
+for _,server in pairs(installed_servers) do
+    lspconfig[server].setup{}
 end
