@@ -74,7 +74,13 @@ return packer.startup(function(use)
     use 'jose-elias-alvarez/null-ls.nvim' -- for formatters and linters
     use 'tamago324/nlsp-settings.nvim' -- language server settings defined in json for
     use 'simrat39/rust-tools.nvim' -- for extra rust-analyzer support
-
+    use {
+        'saecki/crates.nvim',
+        tag = 'v0.2.1',
+        config = function()
+            require('crates').setup()
+        end,
+    }
     --debugging
     use 'mfussenegger/nvim-dap'
 

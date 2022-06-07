@@ -114,6 +114,12 @@ _G.packer_plugins = {
     path = "/home/glitch/.local/share/nvim/site/pack/packer/start/colorschemes",
     url = "https://github.com/lunarvim/colorschemes"
   },
+  ["crates.nvim"] = {
+    config = { "\27LJ\2\n4\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\vcrates\frequire\0" },
+    loaded = true,
+    path = "/home/glitch/.local/share/nvim/site/pack/packer/start/crates.nvim",
+    url = "https://github.com/saecki/crates.nvim"
+  },
   ["darkplus.nvim"] = {
     loaded = true,
     path = "/home/glitch/.local/share/nvim/site/pack/packer/start/darkplus.nvim",
@@ -242,6 +248,10 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: crates.nvim
+time([[Config for crates.nvim]], true)
+try_loadstring("\27LJ\2\n4\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\vcrates\frequire\0", "config", "crates.nvim")
+time([[Config for crates.nvim]], false)
 if should_profile then save_profiles() end
 
 end)
