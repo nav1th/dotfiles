@@ -5,7 +5,7 @@ end
 
 local lspconfig = require("lspconfig")
 
-local servers = { "jsonls", "sumneko_lua","pyright"}
+local servers = { "jsonls", "sumneko_lua","pyright","tsserver"}
 
 lsp_installer.setup {
 	ensure_installed = servers -- automatically installs servers listed
@@ -24,7 +24,7 @@ for _, server in pairs(servers) do --just configures servers installed by lsp-in
     lspconfig[server].setup(opts)
 end
 
-local installed_servers = {"taplo","asm_lsp","rust_analyzer"} -- for servers i already have installed as binaries
+local installed_servers = {"taplo","asm_lsp","rust_analyzer","clangd"} -- for servers i already have installed as binaries
 
 for _,server in pairs(installed_servers) do
     lspconfig[server].setup{}
