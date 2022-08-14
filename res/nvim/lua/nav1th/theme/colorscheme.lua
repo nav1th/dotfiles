@@ -1,7 +1,9 @@
 local colorscheme = "vscode"
 vim.opt.background = "dark"
-vim.g.vscode_style = "dark"
-vim.g.vscode_transparent = 1
+if colorscheme == "vscode" then
+    vim.g.vscode_transparent = 1
+    vim.g.vscode_style = "dark"
+end
 --Configure colorscheme
 local status_ok, _ = pcall(vim.cmd, "colorscheme ".. colorscheme)
 if not status_ok then

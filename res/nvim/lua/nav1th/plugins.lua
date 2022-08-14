@@ -36,7 +36,7 @@ return packer.startup(function(use)
     use 'nvim-lua/popup.nvim' -- an implementation of the Popup API from vim in Neovim
     use 'nvim-lua/plenary.nvim' -- useful lua functions used ny lots of plugins
 
-    -- theme, lualine & bufferline
+    -- look and feel
     use {'lunarvim/colorschemes','lunarvim/darkplus.nvim','sainnhe/sonokai','Mofiqul/vscode.nvim'} --colorschemes
 
     use 'xiyaowong/nvim-transparent' --for a transparent background
@@ -85,7 +85,7 @@ return packer.startup(function(use)
     use 'mfussenegger/nvim-dap'
 
     --set project root to file
-    use 'airblade/vim-rooter'
+--    use 'airblade/vim-rooter'
 
     --makes colors visible
     use 'norcalli/nvim-colorizer.lua'
@@ -97,6 +97,10 @@ return packer.startup(function(use)
 
     use 'preservim/vimux'
 
+    --others
+    use {"akinsho/toggleterm.nvim", tag = 'v2.*', config = function()
+      require("toggleterm").setup()
+    end}
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins

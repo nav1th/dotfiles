@@ -20,20 +20,38 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- Better window navigation
-nmap("<C-h>", "<C-w>h")
-nmap("<C-j>", "<C-w>j")
-nmap("<C-l>", "<C-w>l")
-nmap("<C-k>", "<C-w>k")
-nmap("<CapsLock>","<Esc>")
+nmap("<A-h>", "<C-w>h")
+nmap("<A-j>", "<C-w>j")
+nmap("<A-l>", "<C-w>l")
+nmap("<A-k>", "<C-w>k")
+
+--Kill window
+nmap("<A-x>", "<C-w>:q<CR>")
+
+-- Better terminal navigation
+keymap("t", "<A-j>", "<C-\\><C-N><C-w>j", term_opts)
+keymap("t", "<A-h>", "<C-\\><C-N><C-w>h", term_opts)
+keymap("t", "<A-k>", "<C-\\><C-N><C-w>k", term_opts)
+keymap("t", "<A-l>", "<C-\\><C-N><C-w>l", term_opts)
+
+keymap("t", "<A-x>", "<C-\\><C-N>:ToggleTerm", term_opts)
+nmap("<leader>t",":ToggleTerm <CR>")
+
+--Telescope
+nmap("<leader>ff", ":Telescope find_files<CR>")
+nmap("<leader>fg", ":Telescope find_files<CR>")
+
+
+nmap("<CapsLock>","<Nop>")
 
 --File explorer
 nmap("<leader>e", ":Lex 20<cr>")
 
 -- Resize with arrows
-nmap("<C-Up>", ":resize -2<CR>")
-nmap("<C-Down>", ":resize +2<CR>")
-nmap("<C-Left>", ":vertical resize -2<CR>")
-nmap("<C-Right>", ":vertical resize +2<CR>")
+nmap("<A-Up>", ":resize -2<CR>")
+nmap("<A-Down>", ":resize +2<CR>")
+nmap("<A-Left>", ":vertical resize -2<CR>")
+nmap("<A-Right>", ":vertical resize +2<CR>")
 
 -- Navigate buffers
 nmap("<S-l>", ":bnext<CR>")
@@ -71,9 +89,3 @@ nmap("<Leader>ld", "<cmd>LspTrouble lsp_definitions<CR>", true)
 nmap("<Leader>le","<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>",true)
 nmap("<Leader>lE", "<cmd>LspTroubleWorkspaceToggle<CR>", true)
 
--- Terminal --
--- Better terminal navigation
-keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
-keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
-keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
-keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
