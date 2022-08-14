@@ -24,6 +24,7 @@ nmap("<C-h>", "<C-w>h")
 nmap("<C-j>", "<C-w>j")
 nmap("<C-l>", "<C-w>l")
 nmap("<C-k>", "<C-w>k")
+nmap("<CapsLock>","<Esc>")
 
 --File explorer
 nmap("<leader>e", ":Lex 20<cr>")
