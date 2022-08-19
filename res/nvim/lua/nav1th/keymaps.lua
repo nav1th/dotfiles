@@ -1,7 +1,6 @@
 local opts =  {noremap = true, silent = true}
 local term_opts = { silent = true }
 local keymap = vim.api.nvim_set_keymap
-
 local nmap = function(lhs, rhs, silent)
   keymap("n", lhs, rhs, { noremap = true, silent = silent })
 end
@@ -28,18 +27,18 @@ nmap("<A-k>", "<C-w>k")
 --Kill window
 nmap("<A-x>", "<C-w>:q<CR>")
 
--- Better terminal navigation
+--Terminal
+nmap("<A-t>",":ToggleTerm<CR>")
+keymap("t", "<A-t>", "<C-\\><C-N>:ToggleTerm<CR>", term_opts)
+
 keymap("t", "<A-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<A-h>", "<C-\\><C-N><C-w>h", term_opts)
 keymap("t", "<A-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<A-l>", "<C-\\><C-N><C-w>l", term_opts)
 
-keymap("t", "<A-x>", "<C-\\><C-N>:ToggleTerm", term_opts)
-nmap("<leader>t",":ToggleTerm <CR>")
-
 --Telescope
-nmap("<leader>ff", ":Telescope find_files<CR>")
-nmap("<leader>fg", ":Telescope find_files<CR>")
+nmap("<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<CR>")
+nmap("<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<CR")
 
 
 nmap("<CapsLock>","<Nop>")
@@ -56,6 +55,7 @@ nmap("<A-Right>", ":vertical resize +2<CR>")
 -- Navigate buffers
 nmap("<S-l>", ":bnext<CR>")
 nmap("<S-h>", ":bprevious<CR>")
+nmap("<S-x>",":bw<CR>")
 
 -- Stay in indent mode
 vmap(">", ">gv")

@@ -38,11 +38,10 @@ return packer.startup(function(use)
 
     -- look and feel
     use {'lunarvim/colorschemes','lunarvim/darkplus.nvim','sainnhe/sonokai','Mofiqul/vscode.nvim'} --colorschemes
-
     use 'xiyaowong/nvim-transparent' --for a transparent background
-
     use{'nvim-lualine/lualine.nvim',requires = { 'kyazdani42/nvim-web-devicons', opt = true }} --fancy line
     use 'akinsho/bufferline.nvim' --fancy bufferline
+    use "EdenEast/nightfox.nvim" -- Packer
 
     --telescope fuzzy finder
     use {'nvim-telescope/telescope.nvim'}
