@@ -1,4 +1,4 @@
-local colorscheme = "carbonfox"
+local colorscheme = "nightfox"
 vim.opt.background = "dark"
 if colorscheme == "vscode" then
     vim.g.vscode_transparent = 1

@@ -1,17 +1,21 @@
+local M = {}
 local opts =  {noremap = true, silent = true}
 local term_opts = { silent = true }
 local keymap = vim.api.nvim_set_keymap
-local nmap = function(lhs, rhs, silent)
+function M.nmap(lhs, rhs, silent)
   keymap("n", lhs, rhs, { noremap = true, silent = silent })
 end
 
-local imap = function(lhs, rhs)
+function M.imap(lhs, rhs)
   keymap("i", lhs, rhs, { noremap = true })
 end
 
-local vmap = function(lhs, rhs)
+function M.vmap(lhs, rhs)
   keymap("v", lhs, rhs, { noremap = true })
 end
+local nmap = M.nmap
+local imap = M.imap
+local vmap = M.vmap
 
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>",opts)
@@ -89,3 +93,4 @@ nmap("<Leader>ld", "<cmd>LspTrouble lsp_definitions<CR>", true)
 nmap("<Leader>le","<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>",true)
 nmap("<Leader>lE", "<cmd>LspTroubleWorkspaceToggle<CR>", true)
 
+return M
