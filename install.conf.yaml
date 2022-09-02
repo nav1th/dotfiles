@@ -1,24 +1,24 @@
-[ 
-    {
-        "shell": [
-            ["mkdir -p ~/.config", "Creating config folder"]
-        ]
-    },
-    {
-        "link": {
-            "~/.dotfiles": "",
-            "~/.vimrc": "vimrc",
-            "~/.zshrc": "zshrc",
-            "~/.profile": "profile",
-            "~/.tmux.conf": "tmux.conf",
-            "~/.config/starship.toml": "config/starship.toml",
-            "~/.config/nvim": "config/nvim",
-            "~/.config/kitty": "config/kitty",
-            "~/.config/i3": "config/i3",
-            "~/.config/polybar": "config/polybar",
-            "~/.config/rofi": "config/rofi",
-            "~/.config/ranger": "config/ranger",
-            "~/.config/fish": "config/fish"
-        }
-    }
-]
+- defaults: 
+    link: 
+      relink: true
+
+- clean: ['~']
+
+- "shell": 
+  - ["mkdir -p ~/.config", "Creating config folder"]
+
+- "link": 
+   "~/.dotfiles": ""
+   "~/.vimrc": "vimrc"
+   "~/.zshrc": "zshrc"
+   "~/.profile": "profile"
+   "~/.tmux.conf": "tmux.conf"
+   "~/.config/starship.toml": "config/starship.toml"
+   "~/.config/nvim": "config/nvim"
+   "~/.config/kitty": "config/kitty"
+   "~/.config/i3": "config/i3"
+   "~/.config/polybar": "config/polybar"
+   "~/.config/rofi": "config/rofi"
+   "~/.config/ranger": "config/ranger"
+   "~/.config/fish": "config/fish"
+
