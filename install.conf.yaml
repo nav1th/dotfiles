@@ -1,10 +1,18 @@
 [
     {
         "link": {
-            "~/.vimrc": "vimrc",
-            "~/.vim": "vim/",
-            "~/.zshrc": "zshrc",
-            "~/.gitconfig": "gitconfig"
+            "~/.vimrc": "res/.vimrc",
+            "~/.zshrc": "res/.zshrc",
+            "~/.profile": "res/.profile",
+            "~/.tmux.conf": "res/.tmux.conf"
+            "~/.config/starship.toml": "res/starship.toml"
+            "~/.config/nvim": "res/nvim",
+            "~/.config/kitty": "res/kitty"
+            "~/.config/i3": "res/i3"
+            "~/.config/polybar": "res/polybar"
+            "~/.config/rofi": "res/rofi"
+            "~/.config/ranger": "res/ranger"
+            "~/.config/fish": "res/fish"
         }
     }
 ]
