@@ -11,6 +11,6 @@ else if test -f /usr/bin/starship
         starship init fish | source
     end
 end
-if test -n $TMUX
+if [ "$TMUX" = "" ]
     tmux
 end
