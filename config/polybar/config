@@ -238,20 +238,12 @@ format-underline = ${colour.blue}
 label = %date% %time%
 
 
-[module/temperature]
-interval=0.5
-type = internal/temperature
-thermal-zone = 0
-warn-temperature = 60
-
 format = <label>
 format-underline = ${colour.green}
 format-warn = <label-warn>
 format-warn-underline = ${colour-red}
 
 
-label = %temperature-c%
-label-warn = %temperature-c%
 
 
 [module/workspaces]
