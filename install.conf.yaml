@@ -1,0 +1,10 @@
+[
+    {
+        "link": {
+            "~/.vimrc": "vimrc",
+            "~/.vim": "vim/",
+            "~/.zshrc": "zshrc",
+            "~/.gitconfig": "gitconfig"
+        }
+    }
+]

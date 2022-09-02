@@ -57,9 +57,8 @@ HIST_STAMPS="dd/mm/yyyy"
 
 setopt autocd extendedglob nomatch
 unsetopt beep
-eval "$(starship init zsh)"
+[ -x "/home/glitch/.local/bin/starship" ] && eval "$(starship init zsh)"
 if [ "$TMUX" = "" ]; then tmux; fi
-#powerline-daemon -q
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
