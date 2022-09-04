@@ -8,9 +8,6 @@ DOTFILES=$ROOT_DIR/res
 DISTRO=`cat /etc/os-release | grep -v VERSION | grep ID | awk -F '=' '{print $2}'`
 declare -a PM_PACKAGES=("zsh" "tmux" "vim")
 declare -a CARGO_PACKAGES=("lsd")
-source src/zsh-plug.sh
-source src/nodejs.sh
-source src/nvim.sh
 
 good(){
     printf "\033[92;1mOK: $1\033[0m\n"
@@ -45,9 +42,8 @@ USAGE:
     ./tools/runme.sh [FLAGS] 
 
 FLAGS:
-    -c, --configure         Configure dotfiles in correct places
+    -l, --link              link dotfiles in correct places
     -i, --install           Install specified software
-    -b, --backup            Backup dotfiles to this repo
     -h, --help              Prints help information
 EOF
 }
@@ -158,17 +154,6 @@ main(){
     if [[ $# -gt 0 ]]; then
         for flag in $@; do
             case $flag in
-                -c|--configure)
-                    if check_location; then
-                        if go_ahead "Are you sure you want to install dotfiles (THIS WILL REPLACE DOTFILES WITHIN YOUR HOME DIRECTORY)?"; then
-                            configure
-                        else
-                            exit 0
-                        fi
-                    else
-                        exit 1
-                    fi
-                    ;;
                 -i|--install)
                     if [ $EUID -eq 0 ];then
                         if check_location; then
@@ -184,16 +169,8 @@ main(){
                         exit 1
                     fi
                     ;;
-                -b|--backup)
-                    if check_location; then
-                        if go_ahead "Are sure you want to backup files (THIS WILL REPLACE DOTFILES IN THIS REPO)?"; then
-                            backup
-                        else
-                            exit 0
-                        fi
-                    else
-                        exit 1
-                    fi
+                -l|--link)
+      
                     ;; 
                 -h|--help|*)
                     usage

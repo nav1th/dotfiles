@@ -9,8 +9,8 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 # Colors
-set $image_background ~/Pictures/deadcells_bak.png
-set $lock_background ~/Pictures/deadcells_bak.png
+set $image_background ~/Pictures/ocean.png
+set $lock_background ~/Pictures/ocean.png
 set $i3_background      #2B2C2B
 set $i3_text            #F9FAF9
 set $i3_separator       #454947

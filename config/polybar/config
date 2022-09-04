@@ -105,8 +105,8 @@ type = internal/battery
 
 full-at = 99
 
-battery = BAT1
-adapter = ACAD
+battery = BAT0
+adapter = ADP1
 
 poll-interval = 5
 time-format = %H:%M
@@ -186,7 +186,7 @@ label = MEM %gb_used%/%gb_free%
 
 [module/wlan]
 type = internal/network
-interface = wlp0s20f3
+interface = wlo1
 format-connected =  <ramp-signal>
 format-connected-padding = 1
 format-connected-foreground = ${colour.green}
@@ -209,7 +209,7 @@ ramp-signal-foreground = ${colour.green}
 
 [module/eth]
 type = internal/network
-interface = enp60s0
+interface = eno1
 
 format-connected-underline = ${colour.green}
 format-connected-prefix = " "
@@ -238,10 +238,7 @@ format-underline = ${colour.blue}
 label = %date% %time%
 
 
-format = <label>
-format-underline = ${colour.green}
-format-warn = <label-warn>
-format-warn-underline = ${colour-red}
+
 
 
 
