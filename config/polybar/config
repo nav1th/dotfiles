@@ -46,11 +46,9 @@ width = 100%
 height = 27
 ;offset-x = 1%
 ;offset-y = 1%
-radius = 3.0
 fixed-center = false
 
 bottom = false
-
 background = ${colour.dark}
 foreground = ${colour.light}
 
@@ -66,7 +64,6 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-;font-0 = ${font.hack}
 ;font-1 = ${font.mono}
 ;font-2 = ${font.mono}
 font-0 = ${font.opensansreg}
@@ -82,8 +79,7 @@ modules-center =
 modules-right = pulseaudio-control memory cpu eth wlan temperature  battery date
 
 tray-position = right
-tray-padding = 2
-;tray-background = #0063ff
+tray-padding = 1
 
 ;wm-restack = i3
 
@@ -105,8 +101,8 @@ type = internal/battery
 
 full-at = 99
 
-battery = BAT0
-adapter = ADP1
+battery = BAT1
+adapter = ACAD
 
 poll-interval = 5
 time-format = %H:%M
@@ -163,7 +159,7 @@ tail = true
 format-underline = ${colour.red}
 label-padding = 2
 label-foreground = ${colour.foreground}
-exec = pulseaudio-control --icons-volume " , " --icon-muted " " --sink-nicknames-from "device.description" --sink-nickname "alsa_output.pci-0000_00_1b.0.analog-stereo:  Speakers" --sink-nickname "alsa_output.usb-Kingston_HyperX_Virtual_Surround_Sound_00000000-00.analog-stereo:  Headphones" listen
+exec = pulseaudio-control --icons-volume " , " --icon-muted " " --sink-nicknames-from "device.description" --sink-nickname "alsa_output.pci-0000_00_1b.0.analog-stereo:  Speakers" --sink-nickname "alsa_output.usb-Kingston_HyperX_Virtual_Surround_Sound_00000000-00.analog-stereo:  Headphones" listen 
 click-right = exec pavucontrol &
 click-left = pulseaudio-control togmute
 click-middle = pulseaudio-control --sink-blacklist "alsa_output.pci-0000_01_00.1.hdmi-stereo-extra2" next-sink
@@ -172,44 +168,38 @@ scroll-down = pulseaudio-control --volume-max 130 down
 
 [module/cpu]
 type = internal/cpu
-format = <label> 
+format = <label> 
 format-prefix-foreground = ${colour.light-alt}
 format-underline = ${colour.purple}
-label = CPU %percentage:2%%
-interval = 0.5
+label =  %percentage:2%%
+interval = 3
 
 [module/memory]
 type = internal/memory
-format = <label> 
+format =  <label> 
 format-underline = ${colour.orange}
-label = MEM %gb_used%/%gb_free%
+label = %gb_used%/%gb_free%
+interval = 3
 
 [module/wlan]
 type = internal/network
-interface = wlo1
-format-connected =  <ramp-signal>
+interface = wlp0s20f3
+format-connected = 直 
 format-connected-padding = 1
 format-connected-foreground = ${colour.green}
 format-connected-underline = ${colour.green}
 
-format-disconnected = " "
+format-disconnected = "睊"
 format-disconnected-font = 7
 format-disconnected-padding = 2
 format-disconnected-foreground = ${colour.yellow}
 format-disconnected-underline = ${colour.yellow}
 
-ramp-signal-0 = " "
-ramp-signal-1 = "▂"
-ramp-signal-2 = "▄"
-ramp-signal-3 = "▅"
-ramp-signal-4 = "▇"
-ramp-signal-font = 7
-ramp-signal-foreground = ${colour.green}
 
 
 [module/eth]
 type = internal/network
-interface = eno1
+interface = enp60s0
 
 format-connected-underline = ${colour.green}
 format-connected-prefix = " "
@@ -225,17 +215,15 @@ format-disconnected =
 [module/date]
 type = internal/date
 
-date = %a
-date-alt = " %Y-%m-%d"
+date = "%a %b %d"
 
 time = %H:%M
-time-alt = %H:%M:%S
 
-format-prefix = 
 format-prefix-foreground = ${colour.light-alt}
 format-underline = ${colour.blue}
 
-label = %date% %time%
+label = %time% %date%
+format =  <label>
 
 
 
@@ -295,4 +283,4 @@ screenchange-reload = true
 
 [global/wm]
 margin-top = 0
-margin-bottom = 2
+margin-bottom = 2 vim:ft=dosini

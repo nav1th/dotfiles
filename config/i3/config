@@ -9,8 +9,7 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 # Colors
-set $image_background ~/Pictures/ocean.png
-set $lock_background ~/Pictures/ocean.png
+set $image_background ~/Pictures/night_city.jpg
 set $i3_background      #2B2C2B
 set $i3_text            #F9FAF9
 set $i3_separator       #454947
@@ -87,20 +86,20 @@ client.urgent           $i3_color13 $i3_color12 $i3_color4  $i3_color14
 client.placeholder      $i3_color15 $i3_color17 $i3_color16 $i3_color15 $i3_color17
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -109,10 +108,10 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+y split h
 
 # split in vertical orientation
-bindsym $mod+v split v
+bindsym $mod+z split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -122,8 +121,8 @@ bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
-bindsym $mod+F1 exec --no-startup-id "i3lock -i $lock_background -e"
-exec xautolock -time 10 -locker "i3lock -i $lock_background -e"
+bindsym $mod+F1 exec --no-startup-id "i3lock -i $image_background -e"
+exec xautolock -time 10 -locker "i3lock -i $image_background -e"
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -221,13 +220,16 @@ smart_gaps on
 for_window [class="^.*"] border pixel 3
 
 #  Borders
-default_border pixel 0
+default_border pixel 4
 smart_borders on
 hide_edge_borders both
 
 # Set inner/outer gaps
 gaps inner 14
-gaps outer 0
+gaps outer 3
 
 exec --no-startup-id feh --bg-scale $image_background
 
+
+exec --no-startup-id i3-msg 'workspace 1:term; exec /usr/bin/kitty'
+exec --no-startup-id i3-msg 'workspace 2:web; exec /usr/bin/firefox'
