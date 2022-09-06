@@ -90,6 +90,7 @@ bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
+
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
@@ -122,6 +123,8 @@ bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
 bindsym $mod+F1 exec --no-startup-id "i3lock -i $image_background -e"
+
+#autolocks screen after 10 mins
 exec xautolock -time 10 -locker "i3lock -i $image_background -e"
 
 # toggle tiling / floating
@@ -222,7 +225,7 @@ for_window [class="^.*"] border pixel 3
 #  Borders
 default_border pixel 4
 smart_borders on
-hide_edge_borders both
+#hide_edge_borders both
 
 # Set inner/outer gaps
 gaps inner 14
