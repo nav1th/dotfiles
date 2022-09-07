@@ -101,6 +101,7 @@ label = %title:0:30:...%
 type = internal/battery
 
 full-at = 99
+low-at = 10
 
 battery = BAT1
 adapter = ACAD
@@ -110,17 +111,18 @@ time-format = %H:%M
 
 format-charging = <animation-charging> <label-charging>
 format-discharging = <ramp-capacity> <label-discharging>
+format-low = <animation-low> <label-low>
+format-full = <ramp-capacity> <label-full>
 
 format-charging-underline = ${colour.green}
 format-full-underline = ${colour.white}
 format-low-underline = ${colour.red}
 format-discharging-underline = ${colour.yellow}
 
-format-full = <ramp-capacity> <label-full>
 
 label-charging = %percentage%%
-
 label-discharging = %percentage%%
+label-low = LOW
 
 ; Available tokens:
 ;   %percentage% (default)
@@ -167,7 +169,7 @@ animation-discharging-9 =  
 animation-discharging-framerate = 500
 
 animation-low-0 = 
-animation-low-1 = 
+animation-low-1 = 
 animation-low-framerate = 200
 
 
