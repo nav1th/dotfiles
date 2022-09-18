@@ -267,7 +267,7 @@ format-connected-underline = ${colour.green}
 format-disconnected = 
 format-disconnected-padding = 1
 format-disconnected-foreground = ${colour.white}
-format-disconnected-underline = ${colour.yellow}
+format-disconnected-underline = ${colour.red}
 
 [module/date]
 type = internal/date
