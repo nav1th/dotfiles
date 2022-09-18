@@ -9,7 +9,7 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 # Colors
-set $image_background ~/Pictures/night_city.jpg
+set $image_background ~/Pictures/night_city.png
 set $i3_background      #2B2C2B
 set $i3_text            #F9FAF9
 set $i3_separator       #454947
@@ -232,6 +232,7 @@ gaps inner 14
 gaps outer 3
 
 exec --no-startup-id feh --bg-scale $image_background
+exec --no-startup-id redshift-gtk
 
 
 exec --no-startup-id i3-msg 'workspace 1:term; exec /usr/bin/kitty'

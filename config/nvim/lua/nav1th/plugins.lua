@@ -41,6 +41,7 @@ return packer.startup(function(use)
     use 'xiyaowong/nvim-transparent' --for a transparent background
     use{'nvim-lualine/lualine.nvim',requires = { 'kyazdani42/nvim-web-devicons', opt = true }} --fancy line
     use 'akinsho/bufferline.nvim' --fancy bufferline
+
     use "EdenEast/nightfox.nvim" -- Packer
 
     --telescope fuzzy finder
@@ -97,9 +98,6 @@ return packer.startup(function(use)
     use 'preservim/vimux'
 
     --others
-    use {"akinsho/toggleterm.nvim", tag = 'v2.*', config = function()
-      require("toggleterm").setup()
-    end}
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
