@@ -12,7 +12,6 @@
    "~/.vimrc": "vimrc"
    "~/.zshrc": "zshrc"
    "~/.profile": "profile"
-   "~/.zprofile": "zprofile"
    "~/.tmux.conf": "tmux.conf"
    "~/.config/starship.toml": "config/starship.toml"
    "~/.config/nvim": "config/nvim"
