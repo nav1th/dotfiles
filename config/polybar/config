@@ -28,18 +28,6 @@ dark-purple = #201134
 gray = #999
 dark-gray = #333
 
-[font]
-;hack = Hack Nerd Font:size=10;0
-;blex = BlexMono Nerd Font:size=8
-;fira = FiraCode Nerd Font Mono:size=8
-opensansreg = DroidSans:Regular:size=8
-opensanssemibold = DroidSans:SemiBold:size=8
-opensansbold = DroidSans:Bold:size=8
-opensansboldhigh = DroidSans:Bold:size=11
-opensansital = DroidSans:Italic:size=9
-xos = xos4\ Terminus:size=14;0
-nerd = TerminessTTF Nerd Font:size=12;0
-
 
 [bar/bar1]
 ;monitor = ${env:MONITOR:HDMI-1}
@@ -65,19 +53,15 @@ padding-right = 2
 module-margin-left = 1
 module-margin-right = 2
 
-;font-1 = ${font.mono}
-;font-2 = ${font.mono}
-font-0 = ${font.opensansreg}
-font-1 = ${font.opensanssemibold}
-font-2 = ${font.opensansbold}
-font-3 = ${font.opensansital}
-font-4 = ${font.xos}
-font-5 = ${font.nerd}
-font-6 = ${font.opensansboldhigh}
+#Nerd icons :)
+font-0 = "Ubuntu Nerd Font:size=12;0" 
+
+
+
 
 modules-left = workspaces
 modules-center = 
-modules-right = pulseaudio memory cpu eth wlan temperature  date battery 
+modules-right = pulseaudio memory cpu eth wlan date battery 
 
 tray-position = right
 tray-padding = 1
@@ -191,7 +175,7 @@ interval = 3
 ;   <label-volume> (default)
 ;   <ramp-volume>
 ;   <bar-volume>
-format-volume =<ramp-volume>   <label-volume>
+format-volume =<ramp-volume>  <label-volume>
 format-volume-underline=${colour.red}
 
 ; Available tags:
@@ -224,7 +208,7 @@ click-right = pavucontrol
 
 [module/cpu]
 type = internal/cpu
-format =   <label> 
+format =  <label> 
 format-prefix-foreground = ${colour.light-alt}
 format-underline = ${colour.purple}
 label =  %percentage:2%%
@@ -232,7 +216,7 @@ interval = 3
 
 [module/memory]
 type = internal/memory
-format =    <label> 
+format =  <label> 
 format-underline = ${colour.orange}
 label = %gb_used%/%gb_free%
 interval = 3
@@ -241,7 +225,7 @@ interval = 3
 type = internal/network
 interface = wlan0
 label-connected = %local_ip%
-format-connected = 直   <label-connected>
+format-connected = 直 <label-connected>
 format-connected-padding = 1
 format-connected-foreground = ${colour.white}
 format-connected-underline = ${colour.green}
@@ -258,12 +242,12 @@ type = internal/network
 interface = eth0
 
 label-connected = %local_ip%
-format-connected =   <label-connected>
+format-connected =  <label-connected>
 format-connected-padding = 1
 format-connected-foreground = ${colour.white}
 format-connected-underline = ${colour.green}
 
-format-disconnected =   
+format-disconnected =  
 format-disconnected-padding = 1
 format-disconnected-foreground = ${colour.white}
 format-disconnected-underline = ${colour.red}
@@ -279,7 +263,7 @@ format-prefix-foreground = ${colour.light-alt}
 format-underline = ${colour.blue}
 
 label = %time% %date%
-format =    <label>
+format =  <label>
 
 
 
