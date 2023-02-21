@@ -87,8 +87,8 @@ type = internal/battery
 full-at = 99
 low-at = 10
 
-battery = BAT1
-adapter = ACAD
+battery = BAT0
+adapter = APD1
 
 poll-interval = 3
 time-format = %H:%M
@@ -223,7 +223,7 @@ interval = 3
 
 [module/wlan]
 type = internal/network
-interface = wlan0
+interface = wlo1
 label-connected = %local_ip%
 format-connected = 直 <label-connected>
 format-connected-padding = 1
