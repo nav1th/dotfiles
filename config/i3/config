@@ -9,7 +9,9 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 # Colors
-set $image_background ~/Pictures/night_city.png
+set $term /usr/bin/kitty
+set $web /usr/bin/brave
+set $image_background ~/Pictures/bg.png
 set $i3_background      #2B2C2B
 set $i3_text            #F9FAF9
 set $i3_separator       #454947
@@ -35,11 +37,11 @@ set $i3_color17         #0c0c0c
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
-font pango:monospace 8
+#font pango:monospace 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
+font pango:DejaVu Sans Mono 8
 
 exec --no-startup-id compton -b -f
 exec --no-startup-id setxkbmap -layout gb
@@ -56,8 +58,8 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #d
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 
 #brightness settings
-bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-:q
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5% -n 375
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5-% -n 375
 
 #screenshot
 bindsym Ctrl+Print exec "scrot -u ~/Pictures/screenshots/%Y-%m-%d%H:%M:%S.png"
@@ -68,10 +70,10 @@ bindsym Print exec "scrot ~/Pictures/screenshots/%Y-%m-%d%H:%M:%S.png"
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec kitty 
+bindsym $mod+Return exec $term 
 #start firefox
 #
-bindsym $mod+F2 exec firefox 
+bindsym $mod+F2 exec $web 
 # kill focused window
 bindsym $mod+Shift+q kill
 
@@ -192,10 +194,10 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym l resize shrink width 10 px or 10 ppt
         bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym j resize shrink height 10 px or 10 ppt
+        bindsym h resize grow width 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
@@ -236,6 +238,5 @@ exec --no-startup-id feh --bg-scale $image_background
 exec --no-startup-id redshift-gtk
 
 
-exec --no-startup-id i3-msg 'workspace 1:term; exec /usr/bin/kitty'
-exec --no-startup-id i3-msg 'workspace 2:web; exec /usr/bin/firefox'
-exec "setxkbmap -layout uk"
+exec --no-startup-id i3-msg 'workspace 1:term; exec $term'
+#exec --no-startup-id i3-msg 'workspace 2:web; exec  $web'
