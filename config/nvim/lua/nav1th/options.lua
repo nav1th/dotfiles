@@ -35,9 +35,7 @@ local options = {
     sidescrolloff = 8,
     guifont = "monospace:h17",               -- the font used in graphical neovim applications
     list = true,
-    spelllang = "en_gb"
 }
-
 vim.opt.shortmess:append "c"
 
 for k, v in pairs(options) do
