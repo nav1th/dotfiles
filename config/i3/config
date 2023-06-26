@@ -9,6 +9,9 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 # Colors
+set $web /usr/bin/firefox
+set $term /usr/bin/kitty
+
 set $image_background ~/Pictures/night_city.png
 set $i3_background      #2B2C2B
 set $i3_text            #F9FAF9
@@ -43,14 +46,11 @@ font pango:monospace 8
 
 exec --no-startup-id compton -b -f
 exec --no-startup-id setxkbmap -layout gb
-# NetworkManager is the most popular way to manage wireless networks on Linux,
-# and nm-applet is a desktop environment-independent system tray GUI for it.
 new_window pixel 1
 new_float normal
 
 
-# Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
+# use pactl to adjust volume in PulseAudio.
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
@@ -64,19 +64,19 @@ bindsym Ctrl+Print exec "scrot -u ~/Pictures/screenshots/%Y-%m-%d%H:%M:%S.png"
 bindsym Print exec "scrot ~/Pictures/screenshots/%Y-%m-%d%H:%M:%S.png"
 
 
-# Use Mouse+$mod to drag floating windows to their wanted position
+# use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# start a terminal
-bindsym $mod+Return exec kitty 
-#start firefox
-#
-bindsym $mod+F2 exec firefox 
+#Start term
+bindsym $mod+Return exec $term
+#start web
+bindsym $mod+F2 exec $web 
 # kill focused window
 bindsym $mod+Shift+q kill
 
-#rofi
+#menu for desktop applications
 bindsym $mod+d exec --no-startup-id rofi -show drun -show-icons -location 2 -yoffset 30
+#menu for active windows
 bindsym $mod+Tab exec --no-startup-id rofi -show window -show-icons -location 2 -yoffset 30
 
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
@@ -86,6 +86,7 @@ client.unfocused        $i3_color9  $i3_color9  $i3_color4  $i3_color10
 client.urgent           $i3_color13 $i3_color12 $i3_color4  $i3_color14
 client.placeholder      $i3_color15 $i3_color17 $i3_color16 $i3_color15 $i3_color17
 
+set $refresh_i3status killall -SIGUSR1 i3status
 # change focus
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -236,6 +237,7 @@ exec --no-startup-id feh --bg-scale $image_background
 exec --no-startup-id redshift-gtk
 
 
-exec --no-startup-id i3-msg 'workspace 1:term; exec /usr/bin/kitty'
-exec --no-startup-id i3-msg 'workspace 2:web; exec /usr/bin/firefox'
+
+exec --no-startup-id i3-msg 'workspace 1:term; exec $term'
+exec --no-startup-id i3-msg 'workspace 2:web; exec $web'
 exec "setxkbmap -layout uk"

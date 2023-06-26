@@ -42,7 +42,7 @@ keymap("t", "<A-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 --Telescope
 nmap("<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<CR>")
-nmap("<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<CR")
+nmap("<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<CR>")
 
 
 nmap("<CapsLock>","<Nop>")

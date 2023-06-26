@@ -1,0 +1,2 @@
+set splelllang=en-gb
+
