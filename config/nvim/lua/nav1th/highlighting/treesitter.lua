@@ -1,9 +1,9 @@
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all"
-  --ensure_installed = { "c", "lua", "rust","javascript","typescript" },
+  ensure_installed = { "c", "lua", "rust","javascript","typescript", "rust", "nu" },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
-  sync_install = false,
+  sync_install = true,
 
   -- Automatically install missing parsers when entering buffer
   auto_install = true,
@@ -30,4 +30,15 @@ require'nvim-treesitter.configs'.setup {
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = true,
   },
+}
+
+local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+
+parser_config.nu = {
+  install_info = {
+    url = "https://github.com/nushell/tree-sitter-nu",
+    files = { "src/parser.c" },
+    branch = "main",
+  },
+  filetype = "nu",
 }

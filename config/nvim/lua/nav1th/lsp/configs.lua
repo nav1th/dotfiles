@@ -5,14 +5,9 @@ end
 
 local lspconfig = require("lspconfig")
 
-local servers = { "jsonls" ,"pyright","tsserver"}
+local installed_servers = {"taplo","asm_lsp","rust_analyzer","clangd", "arduino_language_server"} -- for servers i already have installed as binaries
 
-lsp_installer.setup {
-	ensure_installed = servers -- automatically installs servers listed
-}
-
-
-for _, server in pairs(servers) do --just configures servers installed by lsp-installer
+for _,server in pairs(installed_servers) do
 	local opts = {
 		on_attach = require("nav1th.lsp.handlers").on_attach,
 		capabilities = require("nav1th.lsp.handlers").capabilities,
@@ -24,8 +19,3 @@ for _, server in pairs(servers) do --just configures servers installed by lsp-in
     lspconfig[server].setup(opts)
 end
 
-local installed_servers = {"taplo","asm_lsp","rust_analyzer","clangd"} -- for servers i already have installed as binaries
-
-for _,server in pairs(installed_servers) do
-    lspconfig[server].setup{}
-end

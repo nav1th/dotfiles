@@ -55,11 +55,7 @@ HIST_STAMPS="dd/mm/yyyy"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 
-setopt autocd extendedglob nomatch
-unsetopt beep
-[ -x "/usr/local/bin/starship" ] && eval "$(starship init zsh)"
-if [ "$TMUX" = "" ]; then tmux; fi
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-[ -f "/home/glitch/.ghcup/env" ] && source "/home/glitch/.ghcup/env" # ghcup-env
+eval "$(starship init zsh)"
+#if tmux -v 2>/dev/null; then
+#    tmux
+#fi
