@@ -1,7 +1,9 @@
-require "nav1th.plugin"
-require "nav1th.autopair"
-require "nav1th.aesthetics"
 require "nav1th.options"
+require "nav1th.plugins"
+require "nav1th.theme"
+require "nav1th.cmp"
 require "nav1th.lsp"
+require "nav1th.highlighting"
+require "nav1th.indentline"
+require "nav1th.autopair"
 require "nav1th.keymaps"
-

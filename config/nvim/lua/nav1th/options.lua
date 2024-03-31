@@ -48,4 +48,4 @@ vim.cmd "set whichwrap+=<,>,[,],h,l"
 vim.cmd [[set iskeyword+=-]]
 
 
---vim.g.rustfmt_autosave = 1
+vim.g.rustfmt_autosave = 1
