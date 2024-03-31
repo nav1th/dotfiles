@@ -272,7 +272,7 @@ format =  <label>
 
 
 [module/workspaces]
-type = internal/i3
+type = internal/bspwm
 
 pin-workspaces = true
 strip-wsnumbers = true
