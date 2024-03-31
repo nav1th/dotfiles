@@ -15,7 +15,4 @@ if not pgrep --full ssh-agent | string collect >/dev/null
   set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
 end
 
-if [ "$TMUX" = "" ]
-    tmux
-end
 
