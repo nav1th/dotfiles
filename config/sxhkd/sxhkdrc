@@ -7,7 +7,7 @@ super + Return
 	kitty
 # program launcher
 super + @space
-	rofi
+	rofi -show drun
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -22,7 +22,7 @@ super + alt + {q,r}
 	bspc {quit,wm -r}
 
 # close and kill
-super + {_,shift + }w
+super + {_,shift + }q
 	bspc node -{c,k}
 
 # alternate between the tiled and monocle layout
@@ -118,3 +118,12 @@ super + alt + shift + {h,j,k,l}
 # move a floating window
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+#audio
+XF86AudioRaiseVolume
+	amixer set Master 10%+ 1>/dev/null
+XF86AudioLowerVolume
+	amixer set Master 10%- 1>/dev/null
+XF86AudioMute
+	amixer -D pulse set Master 1+ toggle 1>/dev/null
+
