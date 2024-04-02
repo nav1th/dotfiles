@@ -137,16 +137,16 @@ animation-charging-9 = 󰁹
 animation-charging-framerate = 500
 
 ; Only applies if <animation-discharging> is used
-animation-discharging-0 =  󰁺
-animation-discharging-1 =  󰁻
-animation-discharging-2 =  󰁼
-animation-discharging-3 =  󰁽
-animation-discharging-4 =  󰁾
-animation-discharging-5 =  󰁿
-animation-discharging-6 =  󰂀
-animation-discharging-7 =  󰂁
-animation-discharging-8 =  󰂂
-animation-discharging-9 =  󰁹
+animation-discharging-0 =  󰁹
+animation-discharging-1 =  󰂂
+animation-discharging-2 =  󰂁
+animation-discharging-3 =  󰂀
+animation-discharging-4 =  󰁿
+animation-discharging-5 =  󰁾
+animation-discharging-6 =  󰁽
+animation-discharging-7 =  󰁼
+animation-discharging-8 =  󰁻
+animation-discharging-9 =  󰁺
 ; Framerate in milliseconds
 animation-discharging-framerate = 500
 
