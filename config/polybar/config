@@ -66,7 +66,7 @@ modules-right = pulseaudio memory cpu eth wlan date battery
 tray-position = right
 tray-padding = 1
 
-;wm-restack = i3
+wm-restack = bspwm
 
 ;override-redirect = true
 
@@ -111,48 +111,47 @@ label-discharging = %percentage%%
 ;   %percentage% (default)
 
 ; Only applies if <ramp-capacity> is used
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
-ramp-capacity-5 = 
-ramp-capacity-6 = 
-ramp-capacity-7 = 
-ramp-capacity-8 = 
-ramp-capacity-9 = 
-
+ramp-capacity-0 = 󰁺
+ramp-capacity-1 = 󰁻
+ramp-capacity-2 = 󰁼
+ramp-capacity-3 = 󰁽
+ramp-capacity-4 = 󰁾
+ramp-capacity-5 = 󰁿
+ramp-capacity-6 = 󰂀
+ramp-capacity-7 = 󰂁
+ramp-capacity-8 = 󰂂
+ramp-capacity-9 = 󰁹
 
 ; Only applies if <animation-charging> is used
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-3 = 
-animation-charging-4 = 
-animation-charging-5 = 
-animation-charging-6 = 
-animation-charging-7 = 
-animation-charging-8 = 
-animation-charging-9 = 
+animation-charging-0 = 󰁺
+animation-charging-1 = 󰁻
+animation-charging-2 = 󰁼
+animation-charging-3 = 󰁽
+animation-charging-4 = 󰁾
+animation-charging-5 = 󰁿
+animation-charging-6 = 󰂀
+animation-charging-7 = 󰂁
+animation-charging-8 = 󰂂
+animation-charging-9 = 󰁹
 ; Framerate in milliseconds
 animation-charging-framerate = 500
 
 ; Only applies if <animation-discharging> is used
-animation-discharging-0 =  
-animation-discharging-1 =  
-animation-discharging-2 =  
-animation-discharging-3 =  
-animation-discharging-4 =  
-animation-discharging-5 =  
-animation-discharging-6 =  
-animation-discharging-7 =  
-animation-discharging-8 =  
-animation-discharging-9 =  
+animation-discharging-0 =  󰁺
+animation-discharging-1 =  󰁻
+animation-discharging-2 =  󰁼
+animation-discharging-3 =  󰁽
+animation-discharging-4 =  󰁾
+animation-discharging-5 =  󰁿
+animation-discharging-6 =  󰂀
+animation-discharging-7 =  󰂁
+animation-discharging-8 =  󰂂
+animation-discharging-9 =  󰁹
 ; Framerate in milliseconds
 animation-discharging-framerate = 500
 
-animation-low-0 = 
-animation-low-1 = 
+animation-low-0 = 󰁺
+animation-low-1 = 󰂃
 animation-low-framerate = 200
 
 
@@ -192,14 +191,14 @@ format-volume-underline=${colour.red}
 ; Available tokens:
 ;   %percentage% (default)
 ;   %decibels%
-label-muted = 婢
+label-muted = 󰝟
 format-muted-underline = ${colour.red}
 ;label-muted-foreground = #666
 
 ; Only applies if <ramp-volume> is used
-ramp-volume-0 = 
-ramp-volume-1 = 墳
-ramp-volume-2 = 
+ramp-volume-0 = 󰕿
+ramp-volume-1 = 󰖀
+ramp-volume-2 = 󰕾
 
 
 ; Right and Middle click
@@ -208,7 +207,7 @@ click-right = pavucontrol
 
 [module/cpu]
 type = internal/cpu
-format =  <label> 
+format =  <label> 
 format-prefix-foreground = ${colour.light-alt}
 format-underline = ${colour.purple}
 label =  %percentage:2%%
@@ -223,14 +222,14 @@ interval = 3
 
 [module/wlan]
 type = internal/network
-interface = wlan0
+interface = wlp0s20f3
 label-connected = %local_ip%
-format-connected = 直 <label-connected>
+format-connected = 󰖩 <label-connected>
 format-connected-padding = 1
 format-connected-foreground = ${colour.white}
 format-connected-underline = ${colour.green}
 
-format-disconnected = "睊"
+format-disconnected = "󱚼"
 format-disconnected-padding = 2
 format-disconnected-foreground = ${colour.white}
 format-disconnected-underline = ${colour.yellow}
@@ -242,12 +241,12 @@ type = internal/network
 interface = eth0
 
 label-connected = %local_ip%
-format-connected =  <label-connected>
+format-connected = 󰈁 <label-connected>
 format-connected-padding = 1
 format-connected-foreground = ${colour.white}
 format-connected-underline = ${colour.green}
 
-format-disconnected =  
+format-disconnected = 󰈂
 format-disconnected-padding = 1
 format-disconnected-foreground = ${colour.white}
 format-disconnected-underline = ${colour.red}
@@ -264,12 +263,6 @@ format-underline = ${colour.blue}
 
 label = %time% %date%
 format =  <label>
-
-
-
-
-
-
 
 [module/workspaces]
 type = internal/bspwm
@@ -319,7 +312,7 @@ screenchange-reload = true
 ;compositing-background = screen
 ;compositing-foreground = source
 ;compositing-border = over
-;pseudo-transparency = false
+pseudo-transparency = true
 
 [global/wm]
 margin-top = 0
