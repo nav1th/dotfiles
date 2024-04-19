@@ -1,5 +1,5 @@
 local lspconfig = require('lspconfig')
-local servers = { 'clangd',  'pyright', 'tsserver' }
+local servers = { 'clangd',  'pyright', 'tsserver', "jdtls"}
 --lspconfig.pyright.setup {}
 --lspconfig.tsserver.setup {}
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -116,3 +116,29 @@ local function lsp_highlight_document(client)
     end
     illuminate.on_attach(client)
 end
+
+
+vim.g.rustaceanvim = {
+  -- Plugin configuration
+  tools = {
+  },
+  -- LSP configuration
+  server = {
+    on_attach = function(client, bufnr)
+      -- you can also put keymaps in here
+    end,
+    default_settings = {
+      -- rust-analyzer language server configuration
+      ['rust-analyzer'] = {
+          cargo = {
+              features ="all"
+              
+          }
+
+      },
+    },
+  },
+  -- DAP configuration
+  dap = {
+  },
+}

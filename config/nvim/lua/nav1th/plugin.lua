@@ -30,6 +30,7 @@ require("lazy").setup({
     "hrsh7th/cmp-nvim-lua",
     "saadparwaiz1/cmp_luasnip", -- Snippets source for nvim-cmp
     "L3MON4D3/LuaSnip", -- Snippets plugin
+    "mfussenegger/nvim-jdtls", -- Neovim Java LS plugin
     "neovim/nvim-lspconfig", -- enable LSP
     {
         'mrcjkb/rustaceanvim',
