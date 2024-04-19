@@ -1,34 +1,31 @@
 [colour]
-dark = #e61e1e1e
+dark = #1e1e1e
 dark-alt = #e6444
-white  = #e6ffffff
+white  = #ffffff
 light = #dfdfdf
 light-alt = #999
 primary = #ffb52a
 secondary = #e60053
-alert = #bd2c40
-light-red = #d95b5b
-light-green = #249824
-light-purple = #a44ba0
 
-yellow = #e6ffef00
-blue = #e600bbff
-orange = #e6ff7b00
-red = #e6ff0000
-green = #e611ff11
-sealine = #e600cf91
-purple = #e67700ff
-pink = #e6ff77bf
-cyan = #e600e5dd
+blue = #00bbff
+orange = #ff7b00
+red = #aa0000
+sealine = #00cf91
+purple = #7700ff
+pink = #ff77bf
+cyan = #00e5dd
+gray = #999
 
 fav-purple = #6633ff
 dark-red = #330000
 dark-green = #131
 dark-purple = #201134
-gray = #999
 dark-gray = #333
 
 
+good = #11ff11
+notice = #ffef00
+warn = #ff0000
 [bar/bar1]
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
@@ -56,12 +53,9 @@ module-margin-right = 2
 #Nerd icons :)
 font-0 = "Ubuntu Nerd Font:size=12;0" 
 
-
-
-
 modules-left = workspaces
 modules-center = 
-modules-right = pulseaudio memory cpu eth wlan date battery 
+modules-right = pulseaudio date memory cpu network battery
 
 tray-position = right
 tray-padding = 1
@@ -98,10 +92,10 @@ format-discharging = <ramp-capacity> <label-discharging>
 format-low = <animation-low>
 format-full = <ramp-capacity> <label-full>
 
-format-charging-underline = ${colour.green}
+format-charging-underline = ${colour.good}
 format-full-underline = ${colour.white}
-format-low-underline = ${colour.red}
-format-discharging-underline = ${colour.yellow}
+format-low-underline = ${colour.warn}
+format-discharging-underline = ${colour.notice}
 
 
 label-charging = %percentage%%
@@ -207,49 +201,168 @@ click-right = pavucontrol
 
 [module/cpu]
 type = internal/cpu
+interval = 0.5
+warn-percentage = 80
+
+label =  %percentage%%
+label-warn =  %percentage%%
+
 format =  <label> 
-format-prefix-foreground = ${colour.light-alt}
-format-underline = ${colour.purple}
-label =  %percentage:2%%
-interval = 3
+format-underline = ${colour.good}
+format-warn-underline = ${colour.warn}
 
 [module/memory]
 type = internal/memory
+warn-percentage = 90
 format =  <label> 
-format-underline = ${colour.orange}
+format-underline = ${colour.good}
+format-warn-underline = ${colour.warn}
 label = %gb_used%/%gb_free%
-interval = 3
+interval = 1
 
-[module/wlan]
+[module/network]
 type = internal/network
 interface = wlp0s20f3
-label-connected = %local_ip%
-format-connected = 󰖩 <label-connected>
-format-connected-padding = 1
-format-connected-foreground = ${colour.white}
-format-connected-underline = ${colour.green}
 
-format-disconnected = "󱚼"
-format-disconnected-padding = 2
-format-disconnected-foreground = ${colour.white}
-format-disconnected-underline = ${colour.yellow}
+interface-type = wireless
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 3.0
 
 
 
-[module/eth]
-type = internal/network
-interface = eth0
+; Accumulate values from all interfaces
+; when querying for up/downspeed rate
+; Default: false
+accumulate-stats = true
 
-label-connected = %local_ip%
-format-connected = 󰈁 <label-connected>
-format-connected-padding = 1
-format-connected-foreground = ${colour.white}
-format-connected-underline = ${colour.green}
+; Consider an `UNKNOWN` interface state as up.
+; Some devices like USB network adapters have 
+; an unknown state, even when they're running
+; Default: false
+unknown-as-up = true
 
-format-disconnected = 󰈂
-format-disconnected-padding = 1
-format-disconnected-foreground = ${colour.white}
-format-disconnected-underline = ${colour.red}
+; The unit used for displaying network speeds
+; For example if set to the empty string, a speed of 5 KB/s is displayed as 5 K
+; Default: B/s
+; New in version 3.6.0
+speed-unit = ''
+; Available tags:
+;   <label-connected> (default)
+;   <ramp-signal>
+format-connected = <ramp-signal> <label-connected>
+format-connected-underline = ${colour.good}
+
+; Available tags:
+;   <label-disconnected> (default)
+format-disconnected = <label-disconnected>
+format-disconnected-underline = ${colour.warn}
+
+; Used when connected, but ping fails (see ping-interval)
+; Available tags:
+;   <label-connected> (default)
+;   <label-packetloss>
+;   <animation-packetloss>
+
+; All labels support the following tokens:
+;   %ifname%    [wireless+wired]
+;   %local_ip%  [wireless+wired]
+;   %local_ip6% [wireless+wired]
+;   %essid%     [wireless]
+;   %signal%    [wireless]
+;   %upspeed%   [wireless+wired]
+;   %downspeed% [wireless+wired]
+;   %netspeed%  [wireless+wired] (%upspeed% + %downspeed%) (New in version 3.6.0)
+;   %linkspeed% [wired]
+;   %mac%       [wireless+wired] (New in version 3.6.0)
+
+; Default: %ifname% %local_ip%
+label-connected =  %essid%
+
+; Default: (none)
+label-disconnected = 󰤮
+
+; Default: (none)
+;label-packetloss = %essid%
+;label-packetloss-foreground = #eefafafa
+
+; Only applies if <ramp-signal> is used
+ramp-signal-0 = 󰤯
+ramp-signal-1 = 󰤟
+ramp-signal-2 = 󰤢
+ramp-signal-3 = 󰤥
+ramp-signal-4 = 󰤨
+
+[module/temperature]
+type = internal/temperature
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 1
+
+; Thermal zone to use
+; To list all the zone types, run 
+; $ for i in /sys/class/thermal/thermal_zone*; do echo "$i: $(<$i/type)"; done
+; Default: 0
+thermal-zone = 0
+
+; Select thermal zone by name
+; The name has to match the contents of /sys/class/thermal/thermal_zone*/type
+; for the desired thermal zone.
+; New in version 3.7.0
+; Default: ""
+zone-type = x86_pkg_temp
+
+; Full path of temperature sysfs path
+; Use `sensors` to find preferred temperature source, then run
+; $ for i in /sys/class/hwmon/hwmon*/temp*_input; do echo "$(<$(dirname $i)/name): $(cat ${i%_*}_label 2>/dev/null || echo $(basename ${i%_*})) $(readlink -f $i)"; done
+; to find path to desired file
+; Default reverts to thermal zone setting
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon2/temp1_input
+
+; Base temperature for where to start the ramp (in degrees celsius)
+; Default: 0
+base-temperature = 15
+
+; Threshold temperature to display warning label (in degrees celsius)
+; Default: 80
+warn-temperature = 60
+
+; Whether or not to show units next to the temperature tokens (°C, °F)
+; Default: true
+units = true
+
+; Available tags:
+;   <label> (default)
+;   <ramp>
+
+; Available tokens:
+;   %temperature% (deprecated)
+;   %temperature-c%   (default, temperature in °C)
+;   %temperature-f%   (temperature in °F)
+;   %temperature-k%   (temperature in Kelvin, new in version 3.7.0)
+label = %temperature-c%
+
+; Available tokens:
+;   %temperature% (deprecated)
+;   %temperature-c%   (default, temperature in °C)
+;   %temperature-f%   (temperature in °F)
+;   %temperature-k%   (temperature in Kelvin, new in version 3.7.0)
+label-warn = %temperature-c%
+
+; Requires the <ramp> tag
+; The icon selection will range from `base-temperature` to `warn-temperature`,
+; temperatures at and above `warn-temperature` will use the last icon
+; and temperatures at and below `base-temperature` will use `ramp-0`. 
+; All other icons are distributed evenly between the two temperatures.
+;
+format = <label>
+format-underline = ${colours.good}
+
+; Available tags:
+;   <label-warn> (default)
+;   <ramp>
 
 [module/date]
 type = internal/date
@@ -259,7 +372,7 @@ date = "%a %b %d"
 time = %H:%M
 
 format-prefix-foreground = ${colour.light-alt}
-format-underline = ${colour.blue}
+format-underline = ${colour.purple}
 
 label = %time% %date%
 format =  <label>
@@ -271,11 +384,10 @@ pin-workspaces = true
 strip-wsnumbers = true
 index-sort = true
 
-format = <label-state> <label-mode>
+format = <label-state><label-mode>
 
 label-dimmed-underline = ${colour.dark}
 
-;On editing mode (resize for ex)
 label-mode = %mode%
 label-mode-background = ${colour.dark-purple}
 label-mode-underline = ${colour.fav-purple}
