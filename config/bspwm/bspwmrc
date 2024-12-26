@@ -2,6 +2,8 @@
 
 pgrep -x sxhkd > /dev/null || sxhkd &
 pkill polybar 2>/dev/null
+pkill firefox 2>/dev/null
+pkill kitty 2>/dev/null
 
 bspc monitor -d I II III IV V VI VII VIII IX X
 
@@ -24,3 +26,6 @@ bspc rule -a Screenkey manage=off
 polybar bar1 &
 setxkbmap -layout "gb"
 xsetroot -cursor_name left_ptr
+
+# autostart
+~/.config/bspwm/autostart &
