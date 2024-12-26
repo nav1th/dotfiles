@@ -47,8 +47,9 @@ nmap("<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<CR>")
 
 nmap("<CapsLock>","<Nop>")
 
---File explorer
-nmap("<leader>e", ":Lex 20<cr>")
+
+-- Nvim file explorer
+nmap("<leader>x",":NERDTreeToggle<CR>")
 
 -- Resize with arrows
 nmap("<A-Up>", ":resize -2<CR>")
@@ -60,6 +61,12 @@ nmap("<A-Right>", ":vertical resize +2<CR>")
 nmap("<S-l>", ":bnext<CR>")
 nmap("<S-h>", ":bprevious<CR>")
 nmap("<S-x>",":bw<CR>")
+
+--Navigate splits 
+nmap("<c-k>",":wincmd k<CR>")
+nmap("<c-j>",":wincmd j<CR>")
+nmap("<c-h>",":wincmd h<CR>")
+nmap("<c-l>",":wincmd l<CR>")
 
 -- Stay in indent mode
 vmap(">", ">gv")
