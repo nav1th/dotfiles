@@ -17,9 +17,9 @@ require("lazy").setup({
     "folke/which-key.nvim",
     {"folke/neoconf.nvim", cmd = "Neoconf" },
     "tpope/vim-surround",
+    "preservim/nerdtree",
     "nvim-telescope/telescope.nvim",
-    {"nvim-treesitter/nvim-treesitter",run="TSUpdate"}, -- better syntax highlighting
-    "LhKipp/nvim-nu",
+    "nvim-treesitter/nvim-treesitter", -- better syntax highlighting
     "lukas-reineke/indent-blankline.nvim",-- indent line
     "windwp/nvim-autopairs", -- autopairs
     "hrsh7th/nvim-cmp",-- the completion plugin
@@ -45,6 +45,35 @@ require("lazy").setup({
         end
     },
     { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} }, -- indent line
-    {"lunarvim/colorschemes","lunarvim/darkplus.nvim","sainnhe/sonokai","Mofiqul/vscode.nvim" }, -- colourschemes
-    {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
+    {
+        "lunarvim/colorschemes",
+        "lunarvim/darkplus.nvim",
+        "sainnhe/sonokai",
+        "Mofiqul/vscode.nvim" 
+    }, -- colourschemes
+    {
+        'nvim-lualine/lualine.nvim',
+        dependencies = { 'nvim-tree/nvim-web-devicons' }
+    },
+    {
+        'nvim-tree/nvim-tree.lua',
+        dependencies = { 'nvim-tree/nvim-web-devicons' }
+    },
+    "willothy/nvim-cokeline",
+    {
+{'romgrk/barbar.nvim',
+    dependencies = {
+      'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
+      'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
+    },
+    init = function() vim.g.barbar_auto_setup = false end,
+    opts = {
+      -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
+      -- animation = true,
+      -- insert_at_start = true,
+      -- …etc.
+    },
+    version = '^1.0.0', -- optional: only update when a new 1.x version is released
+  },
+    },
 })

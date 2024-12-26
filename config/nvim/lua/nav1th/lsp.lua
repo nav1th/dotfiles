@@ -1,5 +1,5 @@
 local lspconfig = require('lspconfig')
-local servers = { 'clangd',  'pyright', 'tsserver', "jdtls"}
+local servers = { 'clangd',  'pyright', 'tsserver', "jdtls","hls"}
 --lspconfig.pyright.setup {}
 --lspconfig.tsserver.setup {}
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -53,6 +53,8 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
+    { name = 'buffer' },
+    { name = 'path' },
   },
 }
 
