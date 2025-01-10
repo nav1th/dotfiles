@@ -2,6 +2,7 @@ set fish_greeting
 
 neofetch --colors 15 9 9 9 15 15 --ascii_colors 8 9 --block_range
 
+# Starship prompt
 if test -f /usr/local/bin/starship 
     if test -x /usr/local/bin/starship
         starship init fish | source
@@ -18,6 +19,7 @@ if not pgrep --full ssh-agent | string collect >/dev/null
   set -Ux SSH_AUTH_SOCK $SSH_AUTH_SOCK
 end
 
+# Upon login startx
 if status is-login
     if test -z "$DISPLAY" -a "$XDG_VTNR" = 1
         exec startx -- -keeptty
