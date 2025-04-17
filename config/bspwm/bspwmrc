@@ -1,9 +1,10 @@
 #!/bin/sh
 
-pgrep -x sxhkd > /dev/null || sxhkd &
-pkill polybar 2>/dev/null
-
 bspc monitor -d I II III IV V VI VII VIII IX X
+
+pgrep -x sxhkd > /dev/null || sxhkd &
+pkill polybar 2>/dev/null || polybar bar1 &
+
 
 bspc config border_width         2
 bspc config window_gap          12
@@ -17,9 +18,10 @@ bspc config normal_border_color "#330000"
 
 bspc rule -a alacritty desktop='^1' state=tiled
 bspc rule -a firefox desktop='^2' state=tiled
+bspc rule -a vesktop desktop='^3' state=tiled
 bspc rule -a krita desktop='^6' state=fullscreen
 
-polybar bar1 &
+
 setxkbmap -layout "gb"
 xsetroot -cursor_name left_ptr
 
